@@ -233,3 +233,17 @@ Install directory can also be specified at configure step 1 with the option `-DC
 When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used. A issue related to the permission may occur.
 
 When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).
+
+### CMake option to specify a Fortran standard
+
+VTKFortran has its own options to specify Fortran standards.
+
+- VTK_IO_ENABLE_F03STD: to force strict conformance to the Fortran 2003 standard
+- VTK_IO_ENABLE_F08STD: to force strict conformance to the Fortran 2008 standard
+- VTK_IO_ENABLE_F18STD: to force strict conformance to the Fortran 2018 standard
+
+To specify a Fortran standard, use one of these options in step 1 of the build procedure.
+
+```sh
+cmake -B build -DVTK_IO_ENABLE_F18STD=ON
+```

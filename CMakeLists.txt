@@ -179,3 +179,26 @@ add_library(${PROJECT_NAME} STATIC
     ${PENF}
     ${StringiFor}
 )
+
+#################################################################
+# INSTALL VTK_IO library, penf.mod and vtk_fortran.mod
+#################################################################
+install(TARGETS ${PROJECT_NAME}
+    EXPORT ${PROJECT_NAME}
+    ARCHIVE DESTINATION lib
+    LIBRARY DESTINATION lib
+)
+
+IF (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
+        install(FILES
+            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod
+            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/penf.mod
+            DESTINATION include
+        )
+ELSE ()
+    install(FILES
+        ${PROJECT_BINARY_DIR}/modules/vtk_fortran.mod
+        ${PROJECT_BINARY_DIR}/modules/penf.mod
+        DESTINATION include
+    )
+ENDIF ()

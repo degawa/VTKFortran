@@ -162,12 +162,12 @@ cmake --build build
 ```
 #### Tested compilers and generators
 
-|Compiler and version|Generator|OS|Architecture|
-|:--|:--|:--|:--|
-|gfortran 8.4.0|Unix Makefiles|Ubuntu 18.04|x86_64|
-|gfortran 9.3.0|Unix Makefiles|Ubuntu 20.04|x86_64|
-|gfotran 8.1.0 (MinGW-w64)|Unix Makefiles|Windows 10|x86_64|
-|Intel OneAPI 2021.1|Visual Studio 15 2017|Windows 10|x86_64|
+|Compiler and version|Generator|CMake version|OS|Architecture|
+|:--|:--|:--|:--|:--|
+|gfortran 8.4.0|Unix Makefiles|3.20.2|Ubuntu 18.04|x86_64|
+|gfortran 9.3.0|Unix Makefiles|3.16.3|Ubuntu 20.04|x86_64|
+|gfotran 8.1.0 (MinGW-w64)|Unix Makefiles|3.20.3|Windows 10|x86_64|
+|Intel OneAPI 2021.1|Visual Studio 15 2017|3.20.3|Windows 10|x86_64|
 
 #### Compile using gfortran
 1. To configure the build, run
@@ -188,7 +188,16 @@ cmake --build build --config Release
 
 The libray `libVTK_IO.a` is created in `build/lib` and module files are created in `build/modules`.
 
-3. copy created the modules, `penf.mod` and `vtk_fortran.mod`, and the library, `libVTK_IO.a`, to your project directory.
+3. To copy created the modules and the library, run
+
+```sh
+cmake --install build --prefix /path/to/your_project_directory
+```
+
+The modules, `penf.mod` and `vtk_fortran.mod`, are copied to `your_project_directory/include` and the library, `libVTK_IO.a`, is copied to `your_project_directory/lib`.
+
+Install directory can also be specified at configure step 1 with the option `-DCMAKE_INSTALL_PREFIX=/path/to/your_project_directory`.
+When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used.
 
 #### Compile using Intel Fortran on Windows
 1. To configure the build, run
@@ -210,6 +219,17 @@ cmake --build build --config Release
 
 The libray `VTK_IO.lib` is created in `build/lib/<Solution Configuration>` and module files are created in `build/modules/<Solution Configuration>`. When you choose `--config Debug`, `<Solution Configuration>` is replased to `DEBUG`.
 
-3. copy created the modules, `penf.mod` and `vtk_fortran.mod`, and the library, `VTK_IO.lib`, to your project directory.
+3. To copy created the modules and the library, run
+
+```sh
+cmake --install build --config Release --prefix path/to/your_project_directory
+```
+
+The modules, `penf.mod` and `vtk_fortran.mod`, are copied to `your_project_directory\include` and the library, `VTK_IO.lib`, is copied to `your_project_directory\lib`.
+
+`--config {Debug|Release}` option is necessary to determine `<Solution Configuration>`.
+
+Install directory can also be specified at configure step 1 with the option `-DCMAKE_INSTALL_PREFIX=path/to/your_project_directory`.
+When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used. A issue related to the permission may occur.
 
 When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).

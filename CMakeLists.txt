@@ -1,18 +1,18 @@
 #################################################################
 # HEADER
 #################################################################
-CMAKE_MINIMUM_REQUIRED(VERSION 2.8.12)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
 SET(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 
 
 PROJECT(VTK_IO Fortran C)
 
-# Note the agreement between the first number of the triplet 
+# Note the agreement between the first number of the triplet
 # VERSION and the SOVERSION
 SET(${PROJECT_NAME}_VERSION 0.0.1)
 SET(${PROJECT_NAME}_SOVERSION 0)
 
-SET(LIB ${PROJECT_NAME})  
+SET(LIB ${PROJECT_NAME})
 
 SET(CMAKE_VERBOSE_MAKEFILE TRUE)
 
@@ -23,7 +23,6 @@ SET(CMAKE_VERBOSE_MAKEFILE TRUE)
 
 SET(SRC_PATH ${CMAKE_SOURCE_DIR}/src)
 SET(LIB_SRC_PATH ${SRC_PATH}/lib)
-SET(TEST_SRC_PATH ${SRC_PATH}/test)
 
 SET(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMake/Modules/")
 
@@ -122,7 +121,7 @@ ENDIF ()
 
 
 IF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU" OR Fortran_COMPILER_NAME MATCHES "gfortran*")
-  # gfortran 
+  # gfortran
   set(FORTRAN_FLAGS "-cpp -frealloc-lhs ")
   set (CMAKE_Fortran_FLAGS "${FORTRAN_FLAGS} " CACHE STRING "" FORCE)
   set (CMAKE_Fortran_FLAGS_RELEASE "${EXTRA_FLAGS} " CACHE STRING "" FORCE)
@@ -147,10 +146,21 @@ message("CMAKE_Fortra_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
 
 
 #################################################################
-# ADD SOURCE SUBDIRS
+# ADD SOURCES
 #################################################################
 
+FILE(GLOB lib "${SRC_PATH}/lib/*.?90")
+FILE(GLOB BeFoR64 "${SRC_PATH}/third_party/BeFoR64/src/lib/*.?90")
+FILE(GLOB FACE "${SRC_PATH}/third_party/FACE/src/lib/*.?90")
+FILE(GLOB FoXy "${SRC_PATH}/third_party/FoXy/src/lib/*.?90")
+FILE(GLOB PENF "${SRC_PATH}/third_party/PENF/src/lib/*.?90")
+FILE(GLOB StringiFor "${SRC_PATH}/third_party/StringiFor/src/lib/*.?90")
 
-ADD_SUBDIRECTORY(${LIB_SRC_PATH})
-ADD_SUBDIRECTORY(${TEST_SRC_PATH})
-
+add_library(${PROJECT_NAME} STATIC
+    ${lib}
+    ${BeFoR64}
+    ${FACE}
+    ${FoXy}
+    ${PENF}
+    ${StringiFor}
+)

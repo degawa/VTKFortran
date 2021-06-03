@@ -141,3 +141,75 @@ error = a_vtk_file%finalize()
 ```
 
 Note that all VTKFortran functions return an error code that can be used for sophisticated error trapping algorithms.
+
+## Build
+
+### Get the code
+
+```sh
+git clone --recursive https://github.com/degawa/VTKFortran.git
+cd VTKFortran
+git submodule update --init --recursive
+```
+
+### Build with CMake
+
+The simplest way to build is to run
+
+```sh
+cmake -B build
+cmake --build build
+```
+#### Tested compilers and generators
+
+|Compiler and version|Generator|OS|Architecture|
+|:--|:--|:--|:--|
+|gfortran 8.4.0|Unix Makefiles|Ubuntu 18.04|x86_64|
+|gfortran 9.3.0|Unix Makefiles|Ubuntu 20.04|x86_64|
+|gfotran 8.1.0 (MinGW-w64)|Unix Makefiles|Windows 10|x86_64|
+|Intel OneAPI 2021.1|Visual Studio 15 2017|Windows 10|x86_64|
+
+#### Compile using gfortran
+1. To configure the build, run
+
+```sh
+cmake -B build -G "Unix Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_BUILD_TYPE=Release
+```
+
+`-DCMAKE_BUILD_TYPE={Debug|Release}` is optional. The available generators can be confimed to run `cmake --help`.
+
+2. To build the library, run
+
+```sh
+cmake --build build --config Release
+```
+
+`--config {Debug|Release}` is optional.
+
+The libray `libVTK_IO.a` is created in `build/lib` and module files are created in `build/modules`.
+
+3. copy created the modules, `penf.mod` and `vtk_fortran.mod`, and the library, `libVTK_IO.a`, to your project directory.
+
+#### Compile using Intel Fortran on Windows
+1. To configure the build, run
+
+```sh
+cmake -B build -G "Visual Studio 15 2017"  -DCMAKE_Fortran_COMPILER=ifort -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=x64
+```
+
+`Visual Studio 15 2017` is just an example.
+`-DCMAKE_BUILD_TYPE={Debug|Release}` is optional, but `-DCMAKE_GENERATOR_PLATFORM={Win32|x64}` has to be specified to select the target environment properly.
+
+2. To build the library, run
+
+```sh
+cmake --build build --config Release
+```
+
+`--config {Debug|Release}` is recommended to specify the solution configuration.
+
+The libray `VTK_IO.lib` is created in `build/lib/<Solution Configuration>` and module files are created in `build/modules/<Solution Configuration>`. When you choose `--config Debug`, `<Solution Configuration>` is replased to `DEBUG`.
+
+3. copy created the modules, `penf.mod` and `vtk_fortran.mod`, and the library, `VTK_IO.lib`, to your project directory.
+
+When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).

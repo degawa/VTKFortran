@@ -175,7 +175,7 @@ ELSEIF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel" OR Fortran_COMPILER_NAME M
     set (CMAKE_Fortran_FLAGS "${FORTRAN_FLAGS} ${STD_FLAGS} " CACHE STRING "" FORCE)
     set (CMAKE_Fortran_FLAGS_RELEASE "${EXTRA_FLAGS} " CACHE STRING "" FORCE)
     set (CMAKE_Fortran_FLAGS_DEBUG   "/Od /debug:all /check:all /warn:all /Qdiag-disable:5462 /extend-source:132 /traceback /gen-interfaces" CACHE STRING "" FORCE)
-  ELSEIF (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+  ELSE ()
     set(FORTRAN_FLAGS "-cpp -assume realloc_lhs ")
     set (CMAKE_Fortran_FLAGS "${FORTRAN_FLAGS} ${STD_FLAGS} " CACHE STRING "" FORCE)
     set (CMAKE_Fortran_FLAGS_RELEASE "${EXTRA_FLAGS} " CACHE STRING "" FORCE)

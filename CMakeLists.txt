@@ -2,10 +2,8 @@
 # HEADER
 #################################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
-SET(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 
-
-PROJECT(VTK_IO Fortran C)
+PROJECT(VTK_IO Fortran)
 
 # Note the agreement between the first number of the triplet
 # VERSION and the SOVERSION
@@ -13,9 +11,6 @@ SET(${PROJECT_NAME}_VERSION 0.0.1)
 SET(${PROJECT_NAME}_SOVERSION 0)
 
 SET(LIB ${PROJECT_NAME})
-
-SET(CMAKE_VERBOSE_MAKEFILE TRUE)
-
 
 #################################################################
 # DEFINE PATHS

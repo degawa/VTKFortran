@@ -2,10 +2,8 @@
 # HEADER
 #################################################################
 CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
-SET(CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE)
 
-
-PROJECT(VTK_IO Fortran C)
+PROJECT(VTK_IO Fortran)
 
 # Note the agreement between the first number of the triplet
 # VERSION and the SOVERSION
@@ -13,9 +11,6 @@ SET(${PROJECT_NAME}_VERSION 0.0.1)
 SET(${PROJECT_NAME}_SOVERSION 0)
 
 SET(LIB ${PROJECT_NAME})
-
-SET(CMAKE_VERBOSE_MAKEFILE TRUE)
-
 
 #################################################################
 # DEFINE PATHS
@@ -36,6 +31,12 @@ SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 SET(CMAKE_Fortran_MODULE_DIRECTORY ${PROJECT_BINARY_DIR}/modules)
 INCLUDE_DIRECTORIES(${CMAKE_Fortran_MODULE_DIRECTORY})
 
+if(CMAKE_Fortran_COMPILER_ID MATCHES GNU OR Fortran_COMPILER_NAME MATCHES "gfortran*")
+    set(COMPILER_ID gnu)
+endif()
+if(CMAKE_Fortran_COMPILER_ID MATCHES Intel OR Fortran_COMPILER_NAME MATCHES "ifort*")
+    set(COMPILER_ID intel)
+endif()
 
 #################################################################
 # CONFIGURATION TYPES & BUILD MODE
@@ -213,20 +214,20 @@ add_library(${PROJECT_NAME} STATIC
 #################################################################
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}
-    ARCHIVE DESTINATION lib
-    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib/${COMPILER_ID}
+    LIBRARY DESTINATION lib/${COMPILER_ID}
 )
 
 IF (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
         install(FILES
             ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod
             ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/penf.mod
-            DESTINATION include
+            DESTINATION include/${COMPILER_ID}
         )
 ELSE ()
     install(FILES
         ${PROJECT_BINARY_DIR}/modules/vtk_fortran.mod
         ${PROJECT_BINARY_DIR}/modules/penf.mod
-        DESTINATION include
+        DESTINATION include/${COMPILER_ID}
     )
 ENDIF ()

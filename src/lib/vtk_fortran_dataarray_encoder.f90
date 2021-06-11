@@ -1418,7 +1418,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         call pack_data(a1=[int(3*nn*BYR8P, int32)], a2=[(x(n), y(n), z(n), n=1, nn)], packed=xyz)
@@ -1439,7 +1440,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         call pack_data(a1=[int(3*nn*BYR4P, int32)], a2=[(x(n), y(n), z(n), n=1, nn)], packed=xyz)
@@ -1460,7 +1462,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         call pack_data(a1=[int(3*nn*BYI8P, int32)], a2=[(x(n), y(n), z(n), n=1, nn)], packed=xyz)
@@ -1481,7 +1484,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         xyz = transfer([int(3*nn*BYI4P, int32), [(x(n), y(n), z(n), n=1, nn)]], xyz)
@@ -1502,7 +1506,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         call pack_data(a1=[int(3*nn*BYI2P, int32)], a2=[(x(n), y(n), z(n), n=1, nn)], packed=xyz)
@@ -1523,7 +1528,8 @@ contains
             !! Packed data.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n !! Counter.
+        integer(int32) :: n
+            !! Counter.
 
         nn = size(x, dim=1)
         call pack_data(a1=[int(3*nn*BYI1P, int32)], a2=[(x(n), y(n), z(n), n=1, nn)], packed=xyz)
@@ -1542,14 +1548,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)
@@ -1574,14 +1586,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)
@@ -1606,14 +1624,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)
@@ -1638,14 +1662,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)
@@ -1669,14 +1699,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)
@@ -1701,14 +1737,20 @@ contains
             !! Encoded base64 dataarray.
         integer(int8), allocatable :: xyz(:)
             !! Packed data.
-        integer(int32) :: nn1 !! Number of elements along dim 1.
-        integer(int32) :: nn2 !! Number of elements along dim 2.
-        integer(int32) :: nn3 !! Number of elements along dim 3.
+        integer(int32) :: nn1
+            !! Number of elements along dim 1.
+        integer(int32) :: nn2
+            !! Number of elements along dim 2.
+        integer(int32) :: nn3
+            !! Number of elements along dim 3.
         integer(int32) :: nn
             !! Number of elements.
-        integer(int32) :: n1 !! Counter.
-        integer(int32) :: n2 !! Counter.
-        integer(int32) :: n3 !! Counter.
+        integer(int32) :: n1
+            !! Counter.
+        integer(int32) :: n2
+            !! Counter.
+        integer(int32) :: n3
+            !! Counter.
 
         nn1 = size(x, dim=1)
         nn2 = size(x, dim=2)

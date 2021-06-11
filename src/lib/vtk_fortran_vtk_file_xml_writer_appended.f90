@@ -1,6 +1,7 @@
 !| VTK file XMl writer, appended.
 module vtk_fortran_vtk_file_xml_writer_appended
-    use penf
+    use, intrinsic :: iso_fortran_env
+    use penf, only: str, BYI1P, BYI2P, BYI4P, BYI8P, BYR4P, BYR8P
     use stringifor
     use vtk_fortran_dataarray_encoder
     use vtk_fortran_parameters
@@ -14,7 +15,7 @@ module vtk_fortran_vtk_file_xml_writer_appended
         !! VTK file XML writer, appended.
         type(string) :: encoding
             !! Appended data encoding: "raw" or "base64".
-        integer(I4P) :: scratch = 0_I4P
+        integer(int32) :: scratch = 0_int32
             !! Scratch logical unit.
     contains
         ! deferred methods
@@ -22,78 +23,78 @@ module vtk_fortran_vtk_file_xml_writer_appended
             !! Initialize writer.
         procedure, pass(self) :: finalize
             !! Finalize writer.
-        procedure, pass(self) :: write_dataarray1_rank1_R8P
-            !! Write dataarray 1, rank 1, R8P.
-        procedure, pass(self) :: write_dataarray1_rank1_R4P
-            !! Write dataarray 1, rank 1, R4P.
-        procedure, pass(self) :: write_dataarray1_rank1_I8P
-            !! Write dataarray 1, rank 1, I8P.
-        procedure, pass(self) :: write_dataarray1_rank1_I4P
-            !! Write dataarray 1, rank 1, I4P.
-        procedure, pass(self) :: write_dataarray1_rank1_I2P
-            !! Write dataarray 1, rank 1, I2P.
-        procedure, pass(self) :: write_dataarray1_rank1_I1P
-            !! Write dataarray 1, rank 1, I1P.
-        procedure, pass(self) :: write_dataarray1_rank2_R8P
-            !! Write dataarray 1, rank 2, R8P.
-        procedure, pass(self) :: write_dataarray1_rank2_R4P
-            !! Write dataarray 1, rank 2, R4P.
-        procedure, pass(self) :: write_dataarray1_rank2_I8P
-            !! Write dataarray 1, rank 2, I8P.
-        procedure, pass(self) :: write_dataarray1_rank2_I4P
-            !! Write dataarray 1, rank 2, I4P.
-        procedure, pass(self) :: write_dataarray1_rank2_I2P
-            !! Write dataarray 1, rank 2, I2P.
-        procedure, pass(self) :: write_dataarray1_rank2_I1P
-            !! Write dataarray 1, rank 2, I1P.
-        procedure, pass(self) :: write_dataarray1_rank3_R8P
-            !! Write dataarray 1, rank 3, R8P.
-        procedure, pass(self) :: write_dataarray1_rank3_R4P
-            !! Write dataarray 1, rank 3, R4P.
-        procedure, pass(self) :: write_dataarray1_rank3_I8P
-            !! Write dataarray 1, rank 3, I8P.
-        procedure, pass(self) :: write_dataarray1_rank3_I4P
-            !! Write dataarray 1, rank 3, I4P.
-        procedure, pass(self) :: write_dataarray1_rank3_I2P
-            !! Write dataarray 1, rank 3, I2P.
-        procedure, pass(self) :: write_dataarray1_rank3_I1P
-            !! Write dataarray 1, rank 3, I1P.
-        procedure, pass(self) :: write_dataarray1_rank4_R8P
-            !! Write dataarray 1, rank 4, R8P.
-        procedure, pass(self) :: write_dataarray1_rank4_R4P
-            !! Write dataarray 1, rank 4, R4P.
-        procedure, pass(self) :: write_dataarray1_rank4_I8P
-            !! Write dataarray 1, rank 4, I8P.
-        procedure, pass(self) :: write_dataarray1_rank4_I4P
-            !! Write dataarray 1, rank 4, I4P.
-        procedure, pass(self) :: write_dataarray1_rank4_I2P
-            !! Write dataarray 1, rank 4, I2P.
-        procedure, pass(self) :: write_dataarray1_rank4_I1P
-            !! Write dataarray 1, rank 4, I1P.
-        procedure, pass(self) :: write_dataarray3_rank1_R8P
-            !! Write dataarray 3, rank 1, R8P.
-        procedure, pass(self) :: write_dataarray3_rank1_R4P
-            !! Write dataarray 3, rank 1, R4P.
-        procedure, pass(self) :: write_dataarray3_rank1_I8P
-            !! Write dataarray 3, rank 1, I8P.
-        procedure, pass(self) :: write_dataarray3_rank1_I4P
-            !! Write dataarray 3, rank 1, I4P.
-        procedure, pass(self) :: write_dataarray3_rank1_I2P
-            !! Write dataarray 3, rank 1, I2P.
-        procedure, pass(self) :: write_dataarray3_rank1_I1P
-            !! Write dataarray 3, rank 1, I1P.
-        procedure, pass(self) :: write_dataarray3_rank3_R8P
-            !! Write dataarray 3, rank 3, R8P.
-        procedure, pass(self) :: write_dataarray3_rank3_R4P
-            !! Write dataarray 3, rank 3, R4P.
-        procedure, pass(self) :: write_dataarray3_rank3_I8P
-            !! Write dataarray 3, rank 3, I8P.
-        procedure, pass(self) :: write_dataarray3_rank3_I4P
-            !! Write dataarray 3, rank 3, I4P.
-        procedure, pass(self) :: write_dataarray3_rank3_I2P
-            !! Write dataarray 3, rank 3, I2P.
-        procedure, pass(self) :: write_dataarray3_rank3_I1P
-            !! Write dataarray 3, rank 3, I1P.
+        procedure, pass(self) :: write_dataarray1_rank1_real64
+            !! Write dataarray 1, rank 1, real64.
+        procedure, pass(self) :: write_dataarray1_rank1_real32
+            !! Write dataarray 1, rank 1, real32.
+        procedure, pass(self) :: write_dataarray1_rank1_int64
+            !! Write dataarray 1, rank 1, int64.
+        procedure, pass(self) :: write_dataarray1_rank1_int32
+            !! Write dataarray 1, rank 1, int32.
+        procedure, pass(self) :: write_dataarray1_rank1_int16
+            !! Write dataarray 1, rank 1, int16.
+        procedure, pass(self) :: write_dataarray1_rank1_int8
+            !! Write dataarray 1, rank 1, int8.
+        procedure, pass(self) :: write_dataarray1_rank2_real64
+            !! Write dataarray 1, rank 2, real64.
+        procedure, pass(self) :: write_dataarray1_rank2_real32
+            !! Write dataarray 1, rank 2, real32.
+        procedure, pass(self) :: write_dataarray1_rank2_int64
+            !! Write dataarray 1, rank 2, int64.
+        procedure, pass(self) :: write_dataarray1_rank2_int32
+            !! Write dataarray 1, rank 2, int32.
+        procedure, pass(self) :: write_dataarray1_rank2_int16
+            !! Write dataarray 1, rank 2, int16.
+        procedure, pass(self) :: write_dataarray1_rank2_int8
+            !! Write dataarray 1, rank 2, int8.
+        procedure, pass(self) :: write_dataarray1_rank3_real64
+            !! Write dataarray 1, rank 3, real64.
+        procedure, pass(self) :: write_dataarray1_rank3_real32
+            !! Write dataarray 1, rank 3, real32.
+        procedure, pass(self) :: write_dataarray1_rank3_int64
+            !! Write dataarray 1, rank 3, int64.
+        procedure, pass(self) :: write_dataarray1_rank3_int32
+            !! Write dataarray 1, rank 3, int32.
+        procedure, pass(self) :: write_dataarray1_rank3_int16
+            !! Write dataarray 1, rank 3, int16.
+        procedure, pass(self) :: write_dataarray1_rank3_int8
+            !! Write dataarray 1, rank 3, int8.
+        procedure, pass(self) :: write_dataarray1_rank4_real64
+            !! Write dataarray 1, rank 4, real64.
+        procedure, pass(self) :: write_dataarray1_rank4_real32
+            !! Write dataarray 1, rank 4, real32.
+        procedure, pass(self) :: write_dataarray1_rank4_int64
+            !! Write dataarray 1, rank 4, int64.
+        procedure, pass(self) :: write_dataarray1_rank4_int32
+            !! Write dataarray 1, rank 4, int32.
+        procedure, pass(self) :: write_dataarray1_rank4_int16
+            !! Write dataarray 1, rank 4, int16.
+        procedure, pass(self) :: write_dataarray1_rank4_int8
+            !! Write dataarray 1, rank 4, int8.
+        procedure, pass(self) :: write_dataarray3_rank1_real64
+            !! Write dataarray 3, rank 1, real64.
+        procedure, pass(self) :: write_dataarray3_rank1_real32
+            !! Write dataarray 3, rank 1, real32.
+        procedure, pass(self) :: write_dataarray3_rank1_int64
+            !! Write dataarray 3, rank 1, int64.
+        procedure, pass(self) :: write_dataarray3_rank1_int32
+            !! Write dataarray 3, rank 1, int32.
+        procedure, pass(self) :: write_dataarray3_rank1_int16
+            !! Write dataarray 3, rank 1, int16.
+        procedure, pass(self) :: write_dataarray3_rank1_int8
+            !! Write dataarray 3, rank 1, int8.
+        procedure, pass(self) :: write_dataarray3_rank3_real64
+            !! Write dataarray 3, rank 3, real64.
+        procedure, pass(self) :: write_dataarray3_rank3_real32
+            !! Write dataarray 3, rank 3, real32.
+        procedure, pass(self) :: write_dataarray3_rank3_int64
+            !! Write dataarray 3, rank 3, int64.
+        procedure, pass(self) :: write_dataarray3_rank3_int32
+            !! Write dataarray 3, rank 3, int32.
+        procedure, pass(self) :: write_dataarray3_rank3_int16
+            !! Write dataarray 3, rank 3, int16.
+        procedure, pass(self) :: write_dataarray3_rank3_int8
+            !! Write dataarray 3, rank 3, int8.
         procedure, pass(self) :: write_dataarray_appended
             !! Write appended.
         ! private methods
@@ -108,24 +109,24 @@ module vtk_fortran_vtk_file_xml_writer_appended
             write_on_scratch_dataarray1_rank2, &
             write_on_scratch_dataarray1_rank3, &
             write_on_scratch_dataarray1_rank4, &
-            write_on_scratch_dataarray3_rank1_R8P, &
-            write_on_scratch_dataarray3_rank1_R4P, &
-            write_on_scratch_dataarray3_rank1_I8P, &
-            write_on_scratch_dataarray3_rank1_I4P, &
-            write_on_scratch_dataarray3_rank1_I2P, &
-            write_on_scratch_dataarray3_rank1_I1P, &
-            write_on_scratch_dataarray3_rank2_R8P, &
-            write_on_scratch_dataarray3_rank2_R4P, &
-            write_on_scratch_dataarray3_rank2_I8P, &
-            write_on_scratch_dataarray3_rank2_I4P, &
-            write_on_scratch_dataarray3_rank2_I2P, &
-            write_on_scratch_dataarray3_rank2_I1P, &
-            write_on_scratch_dataarray3_rank3_R8P, &
-            write_on_scratch_dataarray3_rank3_R4P, &
-            write_on_scratch_dataarray3_rank3_I8P, &
-            write_on_scratch_dataarray3_rank3_I4P, &
-            write_on_scratch_dataarray3_rank3_I2P, &
-            write_on_scratch_dataarray3_rank3_I1P
+            write_on_scratch_dataarray3_rank1_real64, &
+            write_on_scratch_dataarray3_rank1_real32, &
+            write_on_scratch_dataarray3_rank1_int64, &
+            write_on_scratch_dataarray3_rank1_int32, &
+            write_on_scratch_dataarray3_rank1_int16, &
+            write_on_scratch_dataarray3_rank1_int8, &
+            write_on_scratch_dataarray3_rank2_real64, &
+            write_on_scratch_dataarray3_rank2_real32, &
+            write_on_scratch_dataarray3_rank2_int64, &
+            write_on_scratch_dataarray3_rank2_int32, &
+            write_on_scratch_dataarray3_rank2_int16, &
+            write_on_scratch_dataarray3_rank2_int8, &
+            write_on_scratch_dataarray3_rank3_real64, &
+            write_on_scratch_dataarray3_rank3_real32, &
+            write_on_scratch_dataarray3_rank3_int64, &
+            write_on_scratch_dataarray3_rank3_int32, &
+            write_on_scratch_dataarray3_rank3_int16, &
+            write_on_scratch_dataarray3_rank3_int8
             !! Write dataarray.
         procedure, pass(self), private :: write_on_scratch_dataarray1_rank1
             !! Write dataarray, data 1 rank 1.
@@ -135,42 +136,42 @@ module vtk_fortran_vtk_file_xml_writer_appended
             !! Write dataarray, data 1 rank 3.
         procedure, pass(self), private :: write_on_scratch_dataarray1_rank4
             !! Write dataarray, data 1 rank 4.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_R8P
-            !! Write dataarray, comp 3 rank 1, R8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_R4P
-            !! Write dataarray, comp 3 rank 1, R4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_I8P
-            !! Write dataarray, comp 3 rank 1, I8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_I4P
-            !! Write dataarray, comp 3 rank 1, I4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_I2P
-            !! Write dataarray, comp 3 rank 1, I2P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_I1P
-            !! Write dataarray, comp 3 rank 1, I1P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_R8P
-            !! Write dataarray, comp 3 rank 2, R8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_R4P
-            !! Write dataarray, comp 3 rank 2, R4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_I8P
-            !! Write dataarray, comp 3 rank 2, I8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_I4P
-            !! Write dataarray, comp 3 rank 2, I4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_I2P
-            !! Write dataarray, comp 3 rank 2, I2P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_I1P
-            !! Write dataarray, comp 3 rank 2, I1P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_R8P
-            !! Write dataarray, comp 3 rank 3, R8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_R4P
-            !! Write dataarray, comp 3 rank 3, R4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_I8P
-            !! Write dataarray, comp 3 rank 3, I8P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_I4P
-            !! Write dataarray, comp 3 rank 3, I4P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_I2P
-            !! Write dataarray, comp 3 rank 3, I2P.
-        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_I1P
-            !! Write dataarray, comp 3 rank 3, I1P.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_real64
+            !! Write dataarray, comp 3 rank 1, real64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_real32
+            !! Write dataarray, comp 3 rank 1, real32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_int64
+            !! Write dataarray, comp 3 rank 1, int64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_int32
+            !! Write dataarray, comp 3 rank 1, int32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_int16
+            !! Write dataarray, comp 3 rank 1, int16.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank1_int8
+            !! Write dataarray, comp 3 rank 1, int8.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_real64
+            !! Write dataarray, comp 3 rank 2, real64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_real32
+            !! Write dataarray, comp 3 rank 2, real32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_int64
+            !! Write dataarray, comp 3 rank 2, int64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_int32
+            !! Write dataarray, comp 3 rank 2, int32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_int16
+            !! Write dataarray, comp 3 rank 2, int16.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank2_int8
+            !! Write dataarray, comp 3 rank 2, int8.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_real64
+            !! Write dataarray, comp 3 rank 3, real64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_real32
+            !! Write dataarray, comp 3 rank 3, real32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_int64
+            !! Write dataarray, comp 3 rank 3, int64.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_int32
+            !! Write dataarray, comp 3 rank 3, int32.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_int16
+            !! Write dataarray, comp 3 rank 3, int16.
+        procedure, pass(self), private :: write_on_scratch_dataarray3_rank3_int8
+            !! Write dataarray, comp 3 rank 3, int8.
     end type xml_writer_appended
 contains
     !| Initialize writer.
@@ -184,23 +185,23 @@ contains
             !! File name.
         character(*), intent(in) :: mesh_topology
             !! Mesh topology.
-        integer(I4P), intent(in), optional :: nx1
+        integer(int32), intent(in), optional :: nx1
             !! Initial node of x axis.
-        integer(I4P), intent(in), optional :: nx2
+        integer(int32), intent(in), optional :: nx2
             !! Final node of x axis.
-        integer(I4P), intent(in), optional :: ny1
+        integer(int32), intent(in), optional :: ny1
             !! Initial node of y axis.
-        integer(I4P), intent(in), optional :: ny2
+        integer(int32), intent(in), optional :: ny2
             !! Final node of y axis.
-        integer(I4P), intent(in), optional :: nz1
+        integer(int32), intent(in), optional :: nz1
             !! Initial node of z axis.
-        integer(I4P), intent(in), optional :: nz2
+        integer(int32), intent(in), optional :: nz2
             !! Final node of z axis.
         character(*), intent(in), optional :: mesh_kind
             !! Kind of mesh data: Float64, Float32, ecc.
         logical, intent(in), optional :: is_volatile
             !! Flag to check volatile writer.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         self%topology = trim(adjustl(mesh_topology))
@@ -225,7 +226,7 @@ contains
     function finalize(self) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         call self%write_end_tag(name=self%topology%chars())
@@ -240,13 +241,13 @@ contains
     elemental subroutine ioffset_update(self, n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I4P), intent(in) :: n_byte
+        integer(int32), intent(in) :: n_byte
             !! Number of bytes saved.
 
         if (self%encoding == 'raw') then
             self%ioffset = self%ioffset + BYI4P + n_byte
         else
-            self%ioffset = self%ioffset + ((n_byte + BYI4P + 2_I4P)/3_I4P)*4_I4P
+            self%ioffset = self%ioffset + ((n_byte + BYI4P + 2_int32)/3_int32)*4_int32
         end if
     end subroutine ioffset_update
 
@@ -272,21 +273,21 @@ contains
     end subroutine close_scratch_file
 
     ! write_dataarray methods
-    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (R8P).
-    function write_dataarray1_rank1_R8P(self, data_name, x, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (real64).
+    function write_dataarray1_rank1_real64(self, data_name, x, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R8P), intent(in) :: x(1:)
+        real(real64), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float64'
@@ -295,23 +296,23 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_R8P
+    end function write_dataarray1_rank1_real64
 
-    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (R4P).
-    function write_dataarray1_rank1_R4P(self, data_name, x, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (real32).
+    function write_dataarray1_rank1_real32(self, data_name, x, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R4P), intent(in) :: x(1:)
+        real(real32), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float32'
@@ -320,23 +321,23 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_R4P
+    end function write_dataarray1_rank1_real32
 
-    function write_dataarray1_rank1_I8P(self, data_name, x, is_tuples) result(error)
-        !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (I8P).
+    function write_dataarray1_rank1_int64(self, data_name, x, is_tuples) result(error)
+        !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (int64).
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I8P), intent(in) :: x(1:)
+        integer(int64), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int64'
@@ -345,23 +346,23 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_I8P
+    end function write_dataarray1_rank1_int64
 
-    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (I4P).
-    function write_dataarray1_rank1_I4P(self, data_name, x, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (int32).
+    function write_dataarray1_rank1_int32(self, data_name, x, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I4P), intent(in) :: x(1:)
+        integer(int32), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int32'
@@ -370,23 +371,23 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_I4P
+    end function write_dataarray1_rank1_int32
 
-    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (I2P).
-    function write_dataarray1_rank1_I2P(self, data_name, x, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (int16).
+    function write_dataarray1_rank1_int16(self, data_name, x, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I2P), intent(in) :: x(1:)
+        integer(int16), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int16'
@@ -395,23 +396,23 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_I2P
+    end function write_dataarray1_rank1_int16
 
-    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (I1P).
-    function write_dataarray1_rank1_I1P(self, data_name, x, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="1"...>...</DataArray>` tag (int8).
+    function write_dataarray1_rank1_int8(self, data_name, x, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I1P), intent(in) :: x(1:)
+        integer(int8), intent(in) :: x(1:)
             !! Data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int8'
@@ -420,205 +421,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank1_I1P
+    end function write_dataarray1_rank1_int8
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R8P).
-    function write_dataarray1_rank2_R8P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real64).
+    function write_dataarray1_rank2_real64(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R8P), intent(in) :: x(1:, 1:)
+        real(real64), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Float64'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_R8P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R4P).
-    function write_dataarray1_rank2_R4P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        real(R4P), intent(in) :: x(1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Float32'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_R4P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I8P).
-    function write_dataarray1_rank2_I8P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        integer(I8P), intent(in) :: x(1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Int64'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_I8P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I4P).
-    function write_dataarray1_rank2_I4P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        integer(I4P), intent(in) :: x(1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Int32'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_I4P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I2P).
-    function write_dataarray1_rank2_I2P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        integer(I2P), intent(in) :: x(1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Int16'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_I2P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I1P).
-    function write_dataarray1_rank2_I1P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        integer(I1P), intent(in) :: x(1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
-            !! Number of components.
-
-        data_type = 'Int8'
-        n_components = size(x, dim=1)
-        if (present(one_component)) then
-            if (one_component) n_components = 1
-        end if
-        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
-                                               is_tuples=is_tuples)
-        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
-        error = self%error
-    end function write_dataarray1_rank2_I1P
-
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R8P).
-    function write_dataarray1_rank3_R8P(self, data_name, x, one_component, is_tuples) result(error)
-        class(xml_writer_appended), intent(inout) :: self
-            !! Writer.
-        character(*), intent(in) :: data_name
-            !! Data name.
-        real(R8P), intent(in) :: x(1:, 1:, 1:)
-            !! Data variable.
-        logical, intent(in), optional :: one_component
-            !! Force one component.
-        logical, intent(in), optional :: is_tuples
-            !! Use "NumberOfTuples".
-        integer(I4P) :: error
-            !! Error status.
-        character(len=:), allocatable :: data_type
-            !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float64'
@@ -630,25 +451,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_R8P
+    end function write_dataarray1_rank2_real64
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R4P).
-    function write_dataarray1_rank3_R4P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real32).
+    function write_dataarray1_rank2_real32(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R4P), intent(in) :: x(1:, 1:, 1:)
+        real(real32), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float32'
@@ -660,25 +481,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_R4P
+    end function write_dataarray1_rank2_real32
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I8P).
-    function write_dataarray1_rank3_I8P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int64).
+    function write_dataarray1_rank2_int64(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I8P), intent(in) :: x(1:, 1:, 1:)
+        integer(int64), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int64'
@@ -690,25 +511,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_I8P
+    end function write_dataarray1_rank2_int64
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I4P).
-    function write_dataarray1_rank3_I4P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int32).
+    function write_dataarray1_rank2_int32(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I4P), intent(in) :: x(1:, 1:, 1:)
+        integer(int32), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int32'
@@ -720,25 +541,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_I4P
+    end function write_dataarray1_rank2_int32
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I2P).
-    function write_dataarray1_rank3_I2P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int16).
+    function write_dataarray1_rank2_int16(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I2P), intent(in) :: x(1:, 1:, 1:)
+        integer(int16), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int16'
@@ -750,25 +571,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_I2P
+    end function write_dataarray1_rank2_int16
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I1P).
-    function write_dataarray1_rank3_I1P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int8).
+    function write_dataarray1_rank2_int8(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I1P), intent(in) :: x(1:, 1:, 1:)
+        integer(int8), intent(in) :: x(1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int8'
@@ -780,25 +601,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank3_I1P
+    end function write_dataarray1_rank2_int8
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R8P).
-    function write_dataarray1_rank4_R8P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real64).
+    function write_dataarray1_rank3_real64(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R8P), intent(in) :: x(1:, 1:, 1:, 1:)
+        real(real64), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float64'
@@ -810,25 +631,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_R8P
+    end function write_dataarray1_rank3_real64
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (R4P).
-    function write_dataarray1_rank4_R4P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real32).
+    function write_dataarray1_rank3_real32(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R4P), intent(in) :: x(1:, 1:, 1:, 1:)
+        real(real32), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float32'
@@ -840,25 +661,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_R4P
+    end function write_dataarray1_rank3_real32
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I8P).
-    function write_dataarray1_rank4_I8P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int64).
+    function write_dataarray1_rank3_int64(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I8P), intent(in) :: x(1:, 1:, 1:, 1:)
+        integer(int64), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int64'
@@ -870,25 +691,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_I8P
+    end function write_dataarray1_rank3_int64
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I4P).
-    function write_dataarray1_rank4_I4P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int32).
+    function write_dataarray1_rank3_int32(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I4P), intent(in) :: x(1:, 1:, 1:, 1:)
+        integer(int32), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int32'
@@ -900,25 +721,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_I4P
+    end function write_dataarray1_rank3_int32
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I2P).
-    function write_dataarray1_rank4_I2P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int16).
+    function write_dataarray1_rank3_int16(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I2P), intent(in) :: x(1:, 1:, 1:, 1:)
+        integer(int16), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int16'
@@ -930,25 +751,25 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_I2P
+    end function write_dataarray1_rank3_int16
 
-    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (I1P).
-    function write_dataarray1_rank4_I1P(self, data_name, x, one_component, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int8).
+    function write_dataarray1_rank3_int8(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I1P), intent(in) :: x(1:, 1:, 1:, 1:)
+        integer(int8), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
         logical, intent(in), optional :: one_component
             !! Force one component.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int8'
@@ -960,27 +781,207 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
         error = self%error
-    end function write_dataarray1_rank4_I1P
+    end function write_dataarray1_rank3_int8
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (R8P).
-    function write_dataarray3_rank1_R8P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real64).
+    function write_dataarray1_rank4_real64(self, data_name, x, one_component, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R8P), intent(in) :: x(1:)
+        real(real64), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Float64'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_real64
+
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (real32).
+    function write_dataarray1_rank4_real32(self, data_name, x, one_component, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        real(real32), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Float32'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_real32
+
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int64).
+    function write_dataarray1_rank4_int64(self, data_name, x, one_component, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        integer(int64), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Int64'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_int64
+
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int32).
+    function write_dataarray1_rank4_int32(self, data_name, x, one_component, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        integer(int32), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Int32'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_int32
+
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int16).
+    function write_dataarray1_rank4_int16(self, data_name, x, one_component, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        integer(int16), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Int16'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_int16
+
+    !| Write `<DataArray... NumberOfComponents="n"...>...</DataArray>` tag (int8).
+    function write_dataarray1_rank4_int8(self, data_name, x, one_component, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        integer(int8), intent(in) :: x(1:, 1:, 1:, 1:)
+            !! Data variable.
+        logical, intent(in), optional :: one_component
+            !! Force one component.
+        logical, intent(in), optional :: is_tuples
+            !! Use "NumberOfTuples".
+        integer(int32) :: error
+            !! Error status.
+        character(len=:), allocatable :: data_type
+            !! Data type.
+        integer(int32) :: n_components
+            !! Number of components.
+
+        data_type = 'Int8'
+        n_components = size(x, dim=1)
+        if (present(one_component)) then
+            if (one_component) n_components = 1
+        end if
+        call self%write_dataarray_tag_appended(data_type=data_type, number_of_components=n_components, data_name=data_name, &
+                                               is_tuples=is_tuples)
+        call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x))
+        error = self%error
+    end function write_dataarray1_rank4_int8
+
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (real64).
+    function write_dataarray3_rank1_real64(self, data_name, x, y, z, is_tuples) result(error)
+        class(xml_writer_appended), intent(inout) :: self
+            !! Writer.
+        character(*), intent(in) :: data_name
+            !! Data name.
+        real(real64), intent(in) :: x(1:)
             !! X component of data variable.
-        real(R8P), intent(in) :: y(1:)
+        real(real64), intent(in) :: y(1:)
             !! Y component of data variable.
-        real(R8P), intent(in) :: z(1:)
+        real(real64), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples" instead "NumberOfComponents" attribute.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float64'
@@ -989,27 +990,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_R8P
+    end function write_dataarray3_rank1_real64
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (R4P).
-    function write_dataarray3_rank1_R4P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (real32).
+    function write_dataarray3_rank1_real32(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R4P), intent(in) :: x(1:)
+        real(real32), intent(in) :: x(1:)
             !! X component of data variable.
-        real(R4P), intent(in) :: y(1:)
+        real(real32), intent(in) :: y(1:)
             !! Y component of data variable.
-        real(R4P), intent(in) :: z(1:)
+        real(real32), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float32'
@@ -1018,27 +1019,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_R4P
+    end function write_dataarray3_rank1_real32
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I8P).
-    function write_dataarray3_rank1_I8P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int64).
+    function write_dataarray3_rank1_int64(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I8P), intent(in) :: x(1:)
+        integer(int64), intent(in) :: x(1:)
             !! X component of data variable.
-        integer(I8P), intent(in) :: y(1:)
+        integer(int64), intent(in) :: y(1:)
             !! Y component of data variable.
-        integer(I8P), intent(in) :: z(1:)
+        integer(int64), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int64'
@@ -1047,27 +1048,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_I8P
+    end function write_dataarray3_rank1_int64
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I4P).
-    function write_dataarray3_rank1_I4P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int32).
+    function write_dataarray3_rank1_int32(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I4P), intent(in) :: x(1:)
+        integer(int32), intent(in) :: x(1:)
             !! X component of data variable.
-        integer(I4P), intent(in) :: y(1:)
+        integer(int32), intent(in) :: y(1:)
             !! Y component of data variable.
-        integer(I4P), intent(in) :: z(1:)
+        integer(int32), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int32'
@@ -1076,27 +1077,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_I4P
+    end function write_dataarray3_rank1_int32
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I2P).
-    function write_dataarray3_rank1_I2P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int16).
+    function write_dataarray3_rank1_int16(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I2P), intent(in) :: x(1:)
+        integer(int16), intent(in) :: x(1:)
             !! X component of data variable.
-        integer(I2P), intent(in) :: y(1:)
+        integer(int16), intent(in) :: y(1:)
             !! Y component of data variable.
-        integer(I2P), intent(in) :: z(1:)
+        integer(int16), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int16'
@@ -1105,27 +1106,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_I2P
+    end function write_dataarray3_rank1_int16
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I1P).
-    function write_dataarray3_rank1_I1P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int8).
+    function write_dataarray3_rank1_int8(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I1P), intent(in) :: x(1:)
+        integer(int8), intent(in) :: x(1:)
             !! X component of data variable.
-        integer(I1P), intent(in) :: y(1:)
+        integer(int8), intent(in) :: y(1:)
             !! Y component of data variable.
-        integer(I1P), intent(in) :: z(1:)
+        integer(int8), intent(in) :: z(1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int8'
@@ -1134,27 +1135,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank1_I1P
+    end function write_dataarray3_rank1_int8
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (R8P).
-    function write_dataarray3_rank3_R8P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (real64).
+    function write_dataarray3_rank3_real64(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R8P), intent(in) :: x(1:, 1:, 1:)
+        real(real64), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        real(R8P), intent(in) :: y(1:, 1:, 1:)
+        real(real64), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        real(R8P), intent(in) :: z(1:, 1:, 1:)
+        real(real64), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float64'
@@ -1163,27 +1164,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_R8P
+    end function write_dataarray3_rank3_real64
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (R4P).
-    function write_dataarray3_rank3_R4P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (real32).
+    function write_dataarray3_rank3_real32(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        real(R4P), intent(in) :: x(1:, 1:, 1:)
+        real(real32), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        real(R4P), intent(in) :: y(1:, 1:, 1:)
+        real(real32), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        real(R4P), intent(in) :: z(1:, 1:, 1:)
+        real(real32), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Float32'
@@ -1192,27 +1193,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_R4P
+    end function write_dataarray3_rank3_real32
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I8P).
-    function write_dataarray3_rank3_I8P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int64).
+    function write_dataarray3_rank3_int64(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I8P), intent(in) :: x(1:, 1:, 1:)
+        integer(int64), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        integer(I8P), intent(in) :: y(1:, 1:, 1:)
+        integer(int64), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        integer(I8P), intent(in) :: z(1:, 1:, 1:)
+        integer(int64), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int64'
@@ -1221,27 +1222,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_I8P
+    end function write_dataarray3_rank3_int64
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I4P).
-    function write_dataarray3_rank3_I4P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int32).
+    function write_dataarray3_rank3_int32(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I4P), intent(in) :: x(1:, 1:, 1:)
+        integer(int32), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        integer(I4P), intent(in) :: y(1:, 1:, 1:)
+        integer(int32), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        integer(I4P), intent(in) :: z(1:, 1:, 1:)
+        integer(int32), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int32'
@@ -1250,27 +1251,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_I4P
+    end function write_dataarray3_rank3_int32
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I2P).
-    function write_dataarray3_rank3_I2P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int16).
+    function write_dataarray3_rank3_int16(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I2P), intent(in) :: x(1:, 1:, 1:)
+        integer(int16), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        integer(I2P), intent(in) :: y(1:, 1:, 1:)
+        integer(int16), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        integer(I2P), intent(in) :: z(1:, 1:, 1:)
+        integer(int16), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int16'
@@ -1279,27 +1280,27 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_I2P
+    end function write_dataarray3_rank3_int16
 
-    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (I1P).
-    function write_dataarray3_rank3_I1P(self, data_name, x, y, z, is_tuples) result(error)
+    !| Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (int8).
+    function write_dataarray3_rank3_int8(self, data_name, x, y, z, is_tuples) result(error)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
         character(*), intent(in) :: data_name
             !! Data name.
-        integer(I1P), intent(in) :: x(1:, 1:, 1:)
+        integer(int8), intent(in) :: x(1:, 1:, 1:)
             !! X component of data variable.
-        integer(I1P), intent(in) :: y(1:, 1:, 1:)
+        integer(int8), intent(in) :: y(1:, 1:, 1:)
             !! Y component of data variable.
-        integer(I1P), intent(in) :: z(1:, 1:, 1:)
+        integer(int8), intent(in) :: z(1:, 1:, 1:)
             !! Z component of data variable.
         logical, intent(in), optional :: is_tuples
             !! Use "NumberOfTuples".
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(len=:), allocatable :: data_type
             !! Data type.
-        integer(I4P) :: n_components
+        integer(int32) :: n_components
             !! Number of components.
 
         data_type = 'Int8'
@@ -1308,7 +1309,7 @@ contains
                                                is_tuples=is_tuples)
         call self%ioffset_update(n_byte=self%write_on_scratch_dataarray(x=x, y=y, z=z))
         error = self%error
-    end function write_dataarray3_rank3_I1P
+    end function write_dataarray3_rank3_int8
 
     !| Do nothing, ascii data cannot be appended.
     subroutine write_dataarray_appended(self)
@@ -1316,24 +1317,24 @@ contains
             !! Writer.
         type(string) :: tag_attributes
             !! Tag attributes.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Bytes count.
         character(len=2) :: dataarray_type
             !! Dataarray type = R8,R4,I8,I4,I2,I1.
-        integer(I4P) :: dataarray_dim
+        integer(int32) :: dataarray_dim
             !! Dataarray dimension.
-        real(R8P), allocatable :: dataarray_R8P(:)
-            !! Dataarray buffer of R8P.
-        real(R4P), allocatable :: dataarray_R4P(:)
-            !! Dataarray buffer of R4P.
-        integer(I8P), allocatable :: dataarray_I8P(:)
-            !! Dataarray buffer of I8P.
-        integer(I4P), allocatable :: dataarray_I4P(:)
-            !! Dataarray buffer of I4P.
-        integer(I2P), allocatable :: dataarray_I2P(:)
-            !! Dataarray buffer of I2P.
-        integer(I1P), allocatable :: dataarray_I1P(:)
-            !! Dataarray buffer of I1P.
+        real(real64), allocatable :: dataarray_real64(:)
+            !! Dataarray buffer of real64.
+        real(real32), allocatable :: dataarray_real32(:)
+            !! Dataarray buffer of real32.
+        integer(int64), allocatable :: dataarray_int64(:)
+            !! Dataarray buffer of int64.
+        integer(int32), allocatable :: dataarray_int32(:)
+            !! Dataarray buffer of int32.
+        integer(int16), allocatable :: dataarray_int16(:)
+            !! Dataarray buffer of int16.
+        integer(int8), allocatable :: dataarray_int8(:)
+            !! Dataarray buffer of int8.
 
         call self%write_start_tag(name='AppendedData', attributes='encoding="'//self%encoding%chars()//'"')
         write (unit=self%xml, iostat=self%error) '_'
@@ -1354,23 +1355,23 @@ contains
             read (unit=self%scratch, iostat=self%error, end=10) n_byte, dataarray_type, dataarray_dim
             select case (dataarray_type)
             case ('R8')
-                if (allocated(dataarray_R8P)) deallocate (dataarray_R8P); allocate (dataarray_R8P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_R8P
+                if (allocated(dataarray_real64)) deallocate (dataarray_real64); allocate (dataarray_real64(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_real64
             case ('R4')
-                if (allocated(dataarray_R4P)) deallocate (dataarray_R4P); allocate (dataarray_R4P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_R4P
+                if (allocated(dataarray_real32)) deallocate (dataarray_real32); allocate (dataarray_real32(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_real32
             case ('I8')
-                if (allocated(dataarray_I8P)) deallocate (dataarray_I8P); allocate (dataarray_I8P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_I8P
+                if (allocated(dataarray_int64)) deallocate (dataarray_int64); allocate (dataarray_int64(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_int64
             case ('I4')
-                if (allocated(dataarray_I4P)) deallocate (dataarray_I4P); allocate (dataarray_I4P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_I4P
+                if (allocated(dataarray_int32)) deallocate (dataarray_int32); allocate (dataarray_int32(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_int32
             case ('I2')
-                if (allocated(dataarray_I2P)) deallocate (dataarray_I2P); allocate (dataarray_I2P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_I2P
+                if (allocated(dataarray_int16)) deallocate (dataarray_int16); allocate (dataarray_int16(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_int16
             case ('I1')
-                if (allocated(dataarray_I1P)) deallocate (dataarray_I1P); allocate (dataarray_I1P(1:dataarray_dim))
-                read (unit=self%scratch, iostat=self%error) dataarray_I1P
+                if (allocated(dataarray_int8)) deallocate (dataarray_int8); allocate (dataarray_int8(1:dataarray_dim))
+                read (unit=self%scratch, iostat=self%error) dataarray_int8
             case default
                 self%error = 1
                 write (stderr, '(A)') ' error: bad dataarray_type = '//dataarray_type
@@ -1388,43 +1389,43 @@ contains
             if (self%encoding == 'raw') then
                 select case (dataarray_type)
                 case ('R8')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_R8P
-                    deallocate (dataarray_R8P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_real64
+                    deallocate (dataarray_real64)
                 case ('R4')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_R4P
-                    deallocate (dataarray_R4P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_real32
+                    deallocate (dataarray_real32)
                 case ('I8')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_I8P
-                    deallocate (dataarray_I8P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_int64
+                    deallocate (dataarray_int64)
                 case ('I4')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_I4P
-                    deallocate (dataarray_I4P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_int32
+                    deallocate (dataarray_int32)
                 case ('I2')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_I2P
-                    deallocate (dataarray_I2P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_int16
+                    deallocate (dataarray_int16)
                 case ('I1')
-                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_I1P
-                    deallocate (dataarray_I1P)
+                    write (unit=self%xml, iostat=self%error) n_byte, dataarray_int8
+                    deallocate (dataarray_int8)
                 end select
             else
                 select case (dataarray_type)
                 case ('R8')
-                    code = encode_binary_dataarray(x=dataarray_R8P)
+                    code = encode_binary_dataarray(x=dataarray_real64)
                     write (unit=self%xml, iostat=self%error) code
                 case ('R4')
-                    code = encode_binary_dataarray(x=dataarray_R4P)
+                    code = encode_binary_dataarray(x=dataarray_real32)
                     write (unit=self%xml, iostat=self%error) code
                 case ('I8')
-                    code = encode_binary_dataarray(x=dataarray_I8P)
+                    code = encode_binary_dataarray(x=dataarray_int64)
                     write (unit=self%xml, iostat=self%error) code
                 case ('I4')
-                    code = encode_binary_dataarray(x=dataarray_I4P)
+                    code = encode_binary_dataarray(x=dataarray_int32)
                     write (unit=self%xml, iostat=self%error) code
                 case ('I2')
-                    code = encode_binary_dataarray(x=dataarray_I2P)
+                    code = encode_binary_dataarray(x=dataarray_int16)
                     write (unit=self%xml, iostat=self%error) code
                 case ('I1')
-                    code = encode_binary_dataarray(x=dataarray_I1P)
+                    code = encode_binary_dataarray(x=dataarray_int8)
                     write (unit=self%xml, iostat=self%error) code
                 end select
             end if
@@ -1438,34 +1439,34 @@ contains
             !! Writer.
         class(*), intent(in) :: x(1:)
             !! Data variable.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: nn
+        integer(int32) :: nn
             !! Number of elements.
 
         nn = size(x, dim=1)
         select type (x)
-        type is (real(R8P))
+        type is (real(real64))
             n_byte = nn*BYR8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (real(R4P))
+        type is (real(real32))
             n_byte = nn*BYR4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I8P))
+        type is (integer(int64))
             n_byte = nn*BYI8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I4P))
+        type is (integer(int32))
             n_byte = nn*BYI4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I2P))
+        type is (integer(int16))
             n_byte = nn*BYI2P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I2', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I1P))
+        type is (integer(int8))
             n_byte = nn*BYI1P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I1', nn
             write (unit=self%scratch, iostat=self%error) x
@@ -1478,34 +1479,34 @@ contains
             !! Writer.
         class(*), intent(in) :: x(1:, 1:)
             !! Data variable.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: nn
+        integer(int32) :: nn
             !! Number of elements.
 
         nn = size(x, dim=1)*size(x, dim=2)
         select type (x)
-        type is (real(R8P))
+        type is (real(real64))
             n_byte = nn*BYR8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (real(R4P))
+        type is (real(real32))
             n_byte = nn*BYR4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I8P))
+        type is (integer(int64))
             n_byte = nn*BYI8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I4P))
+        type is (integer(int32))
             n_byte = nn*BYI4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I2P))
+        type is (integer(int16))
             n_byte = nn*BYI2P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I2', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I1P))
+        type is (integer(int8))
             n_byte = nn*BYI1P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I1', nn
             write (unit=self%scratch, iostat=self%error) x
@@ -1518,34 +1519,34 @@ contains
             !! Writer.
         class(*), intent(in) :: x(1:, 1:, 1:)
             !! Data variable.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: nn
+        integer(int32) :: nn
             !! Number of elements.
 
         nn = size(x, dim=1)*size(x, dim=2)*size(x, dim=3)
         select type (x)
-        type is (real(R8P))
+        type is (real(real64))
             n_byte = nn*BYR8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (real(R4P))
+        type is (real(real32))
             n_byte = nn*BYR4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I8P))
+        type is (integer(int64))
             n_byte = nn*BYI8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I4P))
+        type is (integer(int32))
             n_byte = nn*BYI4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I2P))
+        type is (integer(int16))
             n_byte = nn*BYI2P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I2', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I1P))
+        type is (integer(int8))
             n_byte = nn*BYI1P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I1', nn
             write (unit=self%scratch, iostat=self%error) x
@@ -1558,415 +1559,415 @@ contains
             !! Writer.
         class(*), intent(in) :: x(1:, 1:, 1:, 1:)
             !! Data variable.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: nn
+        integer(int32) :: nn
             !! Number of elements.
 
         nn = size(x, dim=1)*size(x, dim=2)*size(x, dim=3)*size(x, dim=4)
         select type (x)
-        type is (real(R8P))
+        type is (real(real64))
             n_byte = nn*BYR8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (real(R4P))
+        type is (real(real32))
             n_byte = nn*BYR4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'R4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I8P))
+        type is (integer(int64))
             n_byte = nn*BYI8P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I8', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I4P))
+        type is (integer(int32))
             n_byte = nn*BYI4P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I4', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I2P))
+        type is (integer(int16))
             n_byte = nn*BYI2P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I2', nn
             write (unit=self%scratch, iostat=self%error) x
-        type is (integer(I1P))
+        type is (integer(int8))
             n_byte = nn*BYI1P
             write (unit=self%scratch, iostat=self%error) n_byte, 'I1', nn
             write (unit=self%scratch, iostat=self%error) x
         end select
     end function write_on_scratch_dataarray1_rank4
 
-    !| Write a dataarray with 3 components of rank 1 (R8P).
-    function write_on_scratch_dataarray3_rank1_R8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (real64).
+    function write_on_scratch_dataarray3_rank1_real64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R8P), intent(in) :: x(1:)
+        real(real64), intent(in) :: x(1:)
             !! X component.
-        real(R8P), intent(in) :: y(1:)
+        real(real64), intent(in) :: y(1:)
             !! Y component.
-        real(R8P), intent(in) :: z(1:)
+        real(real64), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_R8P
+    end function write_on_scratch_dataarray3_rank1_real64
 
-    !| Write a dataarray with 3 components of rank 1 (R4P).
-    function write_on_scratch_dataarray3_rank1_R4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (real32).
+    function write_on_scratch_dataarray3_rank1_real32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R4P), intent(in) :: x(1:)
+        real(real32), intent(in) :: x(1:)
             !! X component.
-        real(R4P), intent(in) :: y(1:)
+        real(real32), intent(in) :: y(1:)
             !! Y component.
-        real(R4P), intent(in) :: z(1:)
+        real(real32), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_R4P
+    end function write_on_scratch_dataarray3_rank1_real32
 
-    !| Write a dataarray with 3 components of rank 1 (I8P).
-    function write_on_scratch_dataarray3_rank1_I8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (int64).
+    function write_on_scratch_dataarray3_rank1_int64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I8P), intent(in) :: x(1:)
+        integer(int64), intent(in) :: x(1:)
             !! X component.
-        integer(I8P), intent(in) :: y(1:)
+        integer(int64), intent(in) :: y(1:)
             !! Y component.
-        integer(I8P), intent(in) :: z(1:)
+        integer(int64), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_I8P
+    end function write_on_scratch_dataarray3_rank1_int64
 
-    !| Write a dataarray with 3 components of rank 1 (I4P).
-    function write_on_scratch_dataarray3_rank1_I4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (int32).
+    function write_on_scratch_dataarray3_rank1_int32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I4P), intent(in) :: x(1:)
+        integer(int32), intent(in) :: x(1:)
             !! X component.
-        integer(I4P), intent(in) :: y(1:)
+        integer(int32), intent(in) :: y(1:)
             !! Y component.
-        integer(I4P), intent(in) :: z(1:)
+        integer(int32), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_I4P
+    end function write_on_scratch_dataarray3_rank1_int32
 
-    !| Write a dataarray with 3 components of rank 1 (I2P).
-    function write_on_scratch_dataarray3_rank1_I2P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (int16).
+    function write_on_scratch_dataarray3_rank1_int16(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I2P), intent(in) :: x(1:)
+        integer(int16), intent(in) :: x(1:)
             !! X component.
-        integer(I2P), intent(in) :: y(1:)
+        integer(int16), intent(in) :: y(1:)
             !! Y component.
-        integer(I2P), intent(in) :: z(1:)
+        integer(int16), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_I2P
+    end function write_on_scratch_dataarray3_rank1_int16
 
-    !| Write a dataarray with 3 components of rank 1 (I1P).
-    function write_on_scratch_dataarray3_rank1_I1P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 1 (int8).
+    function write_on_scratch_dataarray3_rank1_int8(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I1P), intent(in) :: x(1:)
+        integer(int8), intent(in) :: x(1:)
             !! X component.
-        integer(I1P), intent(in) :: y(1:)
+        integer(int8), intent(in) :: y(1:)
             !! Y component.
-        integer(I1P), intent(in) :: z(1:)
+        integer(int8), intent(in) :: z(1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n
+        integer(int32) :: n
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(x(n), y(n), z(n), n=1, size(x, dim=1))])
-    end function write_on_scratch_dataarray3_rank1_I1P
+    end function write_on_scratch_dataarray3_rank1_int8
 
-    !| Write a dataarray with 3 components of rank 2 (R8P).
-    function write_on_scratch_dataarray3_rank2_R8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (real64).
+    function write_on_scratch_dataarray3_rank2_real64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R8P), intent(in) :: x(1:, 1:)
+        real(real64), intent(in) :: x(1:, 1:)
             !! X component.
-        real(R8P), intent(in) :: y(1:, 1:)
+        real(real64), intent(in) :: y(1:, 1:)
             !! Y component.
-        real(R8P), intent(in) :: z(1:, 1:)
+        real(real64), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_R8P
+    end function write_on_scratch_dataarray3_rank2_real64
 
-    !| Write a dataarray with 3 components of rank 2 (R4P).
-    function write_on_scratch_dataarray3_rank2_R4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (real32).
+    function write_on_scratch_dataarray3_rank2_real32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R4P), intent(in) :: x(1:, 1:)
+        real(real32), intent(in) :: x(1:, 1:)
             !! X component.
-        real(R4P), intent(in) :: y(1:, 1:)
+        real(real32), intent(in) :: y(1:, 1:)
             !! Y component.
-        real(R4P), intent(in) :: z(1:, 1:)
+        real(real32), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_R4P
+    end function write_on_scratch_dataarray3_rank2_real32
 
-    !| Write a dataarray with 3 components of rank 2 (I8P).
-    function write_on_scratch_dataarray3_rank2_I8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (int64).
+    function write_on_scratch_dataarray3_rank2_int64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I8P), intent(in) :: x(1:, 1:)
+        integer(int64), intent(in) :: x(1:, 1:)
             !! X component.
-        integer(I8P), intent(in) :: y(1:, 1:)
+        integer(int64), intent(in) :: y(1:, 1:)
             !! Y component.
-        integer(I8P), intent(in) :: z(1:, 1:)
+        integer(int64), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_I8P
+    end function write_on_scratch_dataarray3_rank2_int64
 
-    !| Write a dataarray with 3 components of rank 2 (I4P).
-    function write_on_scratch_dataarray3_rank2_I4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (int32).
+    function write_on_scratch_dataarray3_rank2_int32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I4P), intent(in) :: x(1:, 1:)
+        integer(int32), intent(in) :: x(1:, 1:)
             !! X component.
-        integer(I4P), intent(in) :: y(1:, 1:)
+        integer(int32), intent(in) :: y(1:, 1:)
             !! Y component.
-        integer(I4P), intent(in) :: z(1:, 1:)
+        integer(int32), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_I4P
+    end function write_on_scratch_dataarray3_rank2_int32
 
-    !| Write a dataarray with 3 components of rank 2 (I2P).
-    function write_on_scratch_dataarray3_rank2_I2P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (int16).
+    function write_on_scratch_dataarray3_rank2_int16(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I2P), intent(in) :: x(1:, 1:)
+        integer(int16), intent(in) :: x(1:, 1:)
             !! X component.
-        integer(I2P), intent(in) :: y(1:, 1:)
+        integer(int16), intent(in) :: y(1:, 1:)
             !! Y component.
-        integer(I2P), intent(in) :: z(1:, 1:)
+        integer(int16), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_I2P
+    end function write_on_scratch_dataarray3_rank2_int16
 
-    !| Write a dataarray with 3 components of rank 2 (I1P).
-    function write_on_scratch_dataarray3_rank2_I1P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 2 (int8).
+    function write_on_scratch_dataarray3_rank2_int8(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I1P), intent(in) :: x(1:, 1:)
+        integer(int8), intent(in) :: x(1:, 1:)
             !! X component.
-        integer(I1P), intent(in) :: y(1:, 1:)
+        integer(int8), intent(in) :: y(1:, 1:)
             !! Y component.
-        integer(I1P), intent(in) :: z(1:, 1:)
+        integer(int8), intent(in) :: z(1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[((x(n1, n2), y(n1, n2), z(n1, n2), &
                                                       n1=1, size(x, dim=1)), &
                                                      n2=1, size(x, dim=2))])
-    end function write_on_scratch_dataarray3_rank2_I1P
+    end function write_on_scratch_dataarray3_rank2_int8
 
-    !| Write a dataarray with 3 components of rank 3 (R8P).
-    function write_on_scratch_dataarray3_rank3_R8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (real64).
+    function write_on_scratch_dataarray3_rank3_real64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R8P), intent(in) :: x(1:, 1:, 1:)
+        real(real64), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        real(R8P), intent(in) :: y(1:, 1:, 1:)
+        real(real64), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        real(R8P), intent(in) :: z(1:, 1:, 1:)
+        real(real64), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_R8P
+    end function write_on_scratch_dataarray3_rank3_real64
 
-    !| Write a dataarray with 3 components of rank 3 (R4P).
-    function write_on_scratch_dataarray3_rank3_R4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (real32).
+    function write_on_scratch_dataarray3_rank3_real32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        real(R4P), intent(in) :: x(1:, 1:, 1:)
+        real(real32), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        real(R4P), intent(in) :: y(1:, 1:, 1:)
+        real(real32), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        real(R4P), intent(in) :: z(1:, 1:, 1:)
+        real(real32), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_R4P
+    end function write_on_scratch_dataarray3_rank3_real32
 
-    !| Write a dataarray with 3 components of rank 3 (I8P).
-    function write_on_scratch_dataarray3_rank3_I8P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (int64).
+    function write_on_scratch_dataarray3_rank3_int64(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I8P), intent(in) :: x(1:, 1:, 1:)
+        integer(int64), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        integer(I8P), intent(in) :: y(1:, 1:, 1:)
+        integer(int64), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        integer(I8P), intent(in) :: z(1:, 1:, 1:)
+        integer(int64), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_I8P
+    end function write_on_scratch_dataarray3_rank3_int64
 
-    !| Write a dataarray with 3 components of rank 3 (I4P).
-    function write_on_scratch_dataarray3_rank3_I4P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (int32).
+    function write_on_scratch_dataarray3_rank3_int32(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I4P), intent(in) :: x(1:, 1:, 1:)
+        integer(int32), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        integer(I4P), intent(in) :: y(1:, 1:, 1:)
+        integer(int32), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        integer(I4P), intent(in) :: z(1:, 1:, 1:)
+        integer(int32), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_I4P
+    end function write_on_scratch_dataarray3_rank3_int32
 
-    !| Write a dataarray with 3 components of rank 3 (I2P).
-    function write_on_scratch_dataarray3_rank3_I2P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (int16).
+    function write_on_scratch_dataarray3_rank3_int16(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I2P), intent(in) :: x(1:, 1:, 1:)
+        integer(int16), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        integer(I2P), intent(in) :: y(1:, 1:, 1:)
+        integer(int16), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        integer(I2P), intent(in) :: z(1:, 1:, 1:)
+        integer(int16), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_I2P
+    end function write_on_scratch_dataarray3_rank3_int16
 
-    !| Write a dataarray with 3 components of rank 3 (I1P).
-    function write_on_scratch_dataarray3_rank3_I1P(self, x, y, z) result(n_byte)
+    !| Write a dataarray with 3 components of rank 3 (int8).
+    function write_on_scratch_dataarray3_rank3_int8(self, x, y, z) result(n_byte)
         class(xml_writer_appended), intent(inout) :: self
             !! Writer.
-        integer(I1P), intent(in) :: x(1:, 1:, 1:)
+        integer(int8), intent(in) :: x(1:, 1:, 1:)
             !! X component.
-        integer(I1P), intent(in) :: y(1:, 1:, 1:)
+        integer(int8), intent(in) :: y(1:, 1:, 1:)
             !! Y component.
-        integer(I1P), intent(in) :: z(1:, 1:, 1:)
+        integer(int8), intent(in) :: z(1:, 1:, 1:)
             !! Z component.
-        integer(I4P) :: n_byte
+        integer(int32) :: n_byte
             !! Number of bytes
-        integer(I4P) :: n1
+        integer(int32) :: n1
             !! Counter.
-        integer(I4P) :: n2
+        integer(int32) :: n2
             !! Counter.
-        integer(I4P) :: n3
+        integer(int32) :: n3
             !! Counter.
 
         n_byte = self%write_on_scratch_dataarray(x=[(((x(n1, n2, n3), y(n1, n2, n3), z(n1, n2, n3), &
                                                        n1=1, size(x, dim=1)), n2=1, size(x, dim=2)), n3=1, size(x, dim=3))])
-    end function write_on_scratch_dataarray3_rank3_I1P
+    end function write_on_scratch_dataarray3_rank3_int8
 end module vtk_fortran_vtk_file_xml_writer_appended

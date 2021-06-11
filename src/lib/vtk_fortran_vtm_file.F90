@@ -1,7 +1,8 @@
 !| VTM file class.
 module vtk_fortran_vtm_file
+    use, intrinsic :: iso_fortran_env
     use befor64
-    use penf
+    use penf, only: penf_init, is_initialized
     use stringifor
     use vtk_fortran_vtk_file_xml_writer_abstract
     use vtk_fortran_vtk_file_xml_writer_ascii_local
@@ -14,7 +15,7 @@ module vtk_fortran_vtm_file
         !! VTM file class.
         class(xml_writer_abstract), allocatable, public :: xml_writer
             !! XML writer.
-        integer(I4P), allocatable :: scratch_unit(:)
+        integer(int32), allocatable :: scratch_unit(:)
             !! Scratch units for very large list of named blocks.
     contains
         ! public methods
@@ -46,28 +47,28 @@ contains
             !! VTM file.
         character(*), intent(in) :: filename
             !! File name of output VTM file.
-        integer(I4P), intent(in), optional :: scratch_units_number
+        integer(int32), intent(in), optional :: scratch_units_number
             !! Number of scratch units for very large list of named blocks.
-        integer(I4P) :: scratch_units_number_
+        integer(int32) :: scratch_units_number_
             !! Number of scratch units for very large list of named blocks.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         if (.not. is_initialized) call penf_init
         if (.not. is_b64_initialized) call b64_init
-        scratch_units_number_ = 0_I4P; if (present(scratch_units_number)) scratch_units_number_ = scratch_units_number
+        scratch_units_number_ = 0_int32; if (present(scratch_units_number)) scratch_units_number_ = scratch_units_number
         error = self%finalize()
         if (allocated(self%xml_writer)) deallocate (self%xml_writer)
         allocate (xml_writer_ascii_local :: self%xml_writer)
         error = self%xml_writer%initialize(format='ascii', filename=filename, mesh_topology='vtkMultiBlockDataSet')
-        if (scratch_units_number_ > 0_I4P) allocate (self%scratch_unit(scratch_units_number_))
+        if (scratch_units_number_ > 0_int32) allocate (self%scratch_unit(scratch_units_number_))
     end function initialize
 
     !| Finalize file (writer).
     function finalize(self) result(error)
         class(vtm_file), intent(inout) :: self
             !! VTM file.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         error = 1
@@ -89,7 +90,7 @@ contains
             !! Auxiliary names attributed to each files.
         character(*), intent(in), optional :: name
             !! Block name
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         !|
@@ -121,7 +122,7 @@ contains
             !! Auxiliary names attributed to each files.
         character(*), intent(in), optional :: name
             !! Block name
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         type(string) :: action_
             !! Action string.
@@ -159,13 +160,13 @@ contains
     function parse_scratch_files(self) result(error)
         class(vtm_file), intent(inout) :: self
             !! VTM file.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         character(9999) :: filename
             !! File name of VTK file grouped into current block.
         character(9999) :: name
             !! Block name
-        integer(I4P) :: s, f
+        integer(int32) :: s, f
             !! Counter.
 
         if (allocated(self%scratch_unit)) then
@@ -173,7 +174,7 @@ contains
                 ! rewind scratch file
                 rewind (self%scratch_unit(s))
                 ! write group name
-                f = 0_I4P
+                f = 0_int32
                 read (self%scratch_unit(s), iostat=error, fmt=*) name
                 error = self%write_block(action='open', name=trim(adjustl(name)))
                 ! write group filenames
@@ -183,7 +184,7 @@ contains
                     error = self%xml_writer%write_parallel_block_files(file_index=f, &
                                                                        filename=trim(adjustl(filename)), &
                                                                        name=trim(adjustl(filename)))
-                    f = f + 1_I4P
+                    f = f + 1_int32
                 end do parse_file_loop
                 ! close group
                 error = self%write_block(action='close')
@@ -197,7 +198,7 @@ contains
     function write_block_scratch(self, scratch, action, filename, name) result(error)
         class(vtm_file), intent(inout) :: self
             !! VTM file.
-        integer(I4P), intent(in) :: scratch
+        integer(int32), intent(in) :: scratch
             !! Scratch unit.
         character(*), intent(in) :: action
             !! Action: [open, write].
@@ -205,7 +206,7 @@ contains
             !! File name of VTK file grouped into current block.
         character(*), intent(in), optional :: name
             !! Block name
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
         type(string) :: action_
             !! Action string.

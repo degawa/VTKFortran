@@ -1,6 +1,6 @@
 !| VTK_Fortran, pure Fortran (2003+) library to parse and emitt VTK files.
 module vtk_fortran
-    use penf
+    use, intrinsic :: iso_fortran_env
     use vtk_fortran_pvtk_file, only: pvtk_file
     use vtk_fortran_vtk_file, only: vtk_file
     use vtk_fortran_vtm_file, only: vtm_file
@@ -22,9 +22,9 @@ contains
             !! XML volatile file.
         character(*), intent(in) :: filename
             !! XML file name.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Status error.
-        integer(I4P) :: xml_unit
+        integer(int32) :: xml_unit
             !! XML file unit.
 
         open (newunit=xml_unit, &

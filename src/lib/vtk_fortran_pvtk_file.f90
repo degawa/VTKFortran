@@ -1,7 +1,8 @@
 !| Parallel (partioned) VTK file class.
 module vtk_fortran_pvtk_file
+    use, intrinsic :: iso_fortran_env
     use befor64
-    use penf
+    use penf, only: penf_init, is_initialized
     use vtk_fortran_vtk_file_xml_writer_abstract
     use vtk_fortran_vtk_file_xml_writer_ascii_local
 
@@ -31,19 +32,19 @@ contains
             !! Mesh topology.
         character(*), intent(in) :: mesh_kind
             !! Kind of mesh data: Float64, Float32, ecc.
-        integer(I4P), intent(in), optional :: nx1
+        integer(int32), intent(in), optional :: nx1
             !! Initial node of x axis.
-        integer(I4P), intent(in), optional :: nx2
+        integer(int32), intent(in), optional :: nx2
             !! Final node of x axis.
-        integer(I4P), intent(in), optional :: ny1
+        integer(int32), intent(in), optional :: ny1
             !! Initial node of y axis.
-        integer(I4P), intent(in), optional :: ny2
+        integer(int32), intent(in), optional :: ny2
             !! Final node of y axis.
-        integer(I4P), intent(in), optional :: nz1
+        integer(int32), intent(in), optional :: nz1
             !! Initial node of z axis.
-        integer(I4P), intent(in), optional :: nz2
+        integer(int32), intent(in), optional :: nz2
             !! Final node of z axis.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         !|
@@ -59,7 +60,7 @@ contains
         !
         !```fortran
         ! type(pvtk_file) :: pvtk
-        ! integer(I4P)    :: nx1, nx2, ny1, ny2, nz1, nz2
+        ! integer(int32)    :: nx1, nx2, ny1, ny2, nz1, nz2
         ! ...
         ! error = pvtk%initialize('XML_RECT_BINARY.pvtr','PRectilinearGrid',nx1=nx1,nx2=nx2,ny1=ny1,ny2=ny2,nz1=nz1,nz2=nz2)
         ! ...
@@ -79,7 +80,7 @@ contains
     function finalize(self) result(error)
         class(pvtk_file), intent(inout) :: self
             !! VTK file.
-        integer(I4P) :: error
+        integer(int32) :: error
             !! Error status.
 
         error = 1

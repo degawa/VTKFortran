@@ -34,6 +34,8 @@ wiki/
 forks/
 references/
 exe/
+api-doc/
+build/
 
 # special files
 get_automatic_changelog.sh

@@ -5,6 +5,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
 
 PROJECT(VTK_IO Fortran)
 
+enable_testing()
+
 # Note the agreement between the first number of the triplet
 # VERSION and the SOVERSION
 SET(${PROJECT_NAME}_VERSION 0.0.1)
@@ -193,41 +195,4 @@ message("CMAKE_Fortra_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
 # ADD SOURCES
 #################################################################
 
-FILE(GLOB lib "${SRC_PATH}/lib/*.?90")
-FILE(GLOB BeFoR64 "${SRC_PATH}/third_party/BeFoR64/src/lib/*.?90")
-FILE(GLOB FACE "${SRC_PATH}/third_party/FACE/src/lib/*.?90")
-FILE(GLOB FoXy "${SRC_PATH}/third_party/FoXy/src/lib/*.?90")
-FILE(GLOB PENF "${SRC_PATH}/third_party/PENF/src/lib/*.?90")
-FILE(GLOB StringiFor "${SRC_PATH}/third_party/StringiFor/src/lib/*.?90")
-
-add_library(${PROJECT_NAME} STATIC
-    ${lib}
-    ${BeFoR64}
-    ${FACE}
-    ${FoXy}
-    ${PENF}
-    ${StringiFor}
-)
-
-#################################################################
-# INSTALL VTK_IO library, penf.mod and vtk_fortran.mod
-#################################################################
-install(TARGETS ${PROJECT_NAME}
-    EXPORT ${PROJECT_NAME}
-    ARCHIVE DESTINATION lib/${COMPILER_ID}
-    LIBRARY DESTINATION lib/${COMPILER_ID}
-)
-
-IF (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
-        install(FILES
-            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod
-            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/penf.mod
-            DESTINATION include/${COMPILER_ID}
-        )
-ELSE ()
-    install(FILES
-        ${PROJECT_BINARY_DIR}/modules/vtk_fortran.mod
-        ${PROJECT_BINARY_DIR}/modules/penf.mod
-        DESTINATION include/${COMPILER_ID}
-    )
-ENDIF ()
+add_subdirectory(src)

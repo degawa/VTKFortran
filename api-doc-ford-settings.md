@@ -29,4 +29,4 @@ md_extensions: markdown.extensions.toc
                markdown.extensions.smarty
 
 <!-- document's top page content --->
-{!api-doc-index.md!}
+{!README.md!}

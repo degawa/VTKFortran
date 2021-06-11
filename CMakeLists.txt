@@ -5,6 +5,8 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.15)
 
 PROJECT(VTK_IO Fortran)
 
+enable_testing()
+
 # Note the agreement between the first number of the triplet
 # VERSION and the SOVERSION
 SET(${PROJECT_NAME}_VERSION 0.0.1)

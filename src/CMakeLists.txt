@@ -70,6 +70,7 @@ target_link_libraries(${PROJECT_NAME}
     foxy
 )
 
+add_subdirectory(tests)
 
 #################################################################
 # INSTALL VTK_IO library, penf.mod and vtk_fortran.mod

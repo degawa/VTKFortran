@@ -39,6 +39,7 @@ endif()
 if(CMAKE_Fortran_COMPILER_ID MATCHES Intel OR Fortran_COMPILER_NAME MATCHES "ifort*")
     set(COMPILER_ID intel)
 endif()
+OPTION(${PROJECT_NAME}_ENABLE_INSTALL_SUBDIR "Add compiler ID as a subdirectory to the install prefix" OFF)
 
 #################################################################
 # CONFIGURATION TYPES & BUILD MODE

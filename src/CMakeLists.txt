@@ -81,24 +81,34 @@ add_subdirectory(tests)
 #################################################################
 # INSTALL VTK_IO library, penf.mod and vtk_fortran.mod
 #################################################################
+
+if(${${PROJECT_NAME}_ENABLE_INSTALL_SUBDIR})
+    set(LIB_DIST lib/${COMPILER_ID})
+    set(INC_DIST include/${COMPILER_ID})
+    message("**A subdirectory ${COMPILER_ID} is added to the install prefix**")
+else()
+    set(LIB_DIST lib)
+    set(INC_DIST include)
+endif()
+
 ### install library
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}
-    ARCHIVE DESTINATION lib/${COMPILER_ID}
-    LIBRARY DESTINATION lib/${COMPILER_ID}
+    ARCHIVE DESTINATION ${LIB_DIST}
+    LIBRARY DESTINATION ${INC_DIST}
 )
 
 ### install modules
 IF (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
-        install(FILES
-            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod
-            ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/penf.mod
-            DESTINATION include/${COMPILER_ID}
-        )
+    install(FILES
+        ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod
+        ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/penf.mod
+        DESTINATION ${INC_DIST}
+    )
 ELSE ()
     install(FILES
         ${PROJECT_BINARY_DIR}/modules/vtk_fortran.mod
         ${PROJECT_BINARY_DIR}/modules/penf.mod
-        DESTINATION include/${COMPILER_ID}
+        DESTINATION ${INC_DIST}
     )
 ENDIF ()

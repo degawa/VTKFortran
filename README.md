@@ -110,15 +110,16 @@ Go to [Top](#top)
 Let us assume our aim being to save our pure Fortran data into a VTK structured grid file in binary XML form. This is simple as
 
 ```fortran
+use, intrinsic :: iso_fortran_env
 use vtk_fortran, only : vtk_file
 
 type(vtk_file)     :: a_vtk_file                             ! A VTK file.
-integer, parameter :: nx1=0_I4P                              ! X lower bound extent.
-integer, parameter :: nx2=9_I4P                              ! X upper bound extent.
-integer, parameter :: ny1=0_I4P                              ! Y lower bound extent.
-integer, parameter :: ny2=5_I4P                              ! Y upper bound extent.
-integer, parameter :: nz1=0_I4P                              ! Z lower bound extent.
-integer, parameter :: nz2=5_I4P                              ! Z upper bound extent.
+integer, parameter :: nx1=0_int32                            ! X lower bound extent.
+integer, parameter :: nx2=9_int32                            ! X upper bound extent.
+integer, parameter :: ny1=0_int32                            ! Y lower bound extent.
+integer, parameter :: ny2=5_int32                            ! Y upper bound extent.
+integer, parameter :: nz1=0_int32                            ! Z lower bound extent.
+integer, parameter :: nz2=5_int32                            ! Z upper bound extent.
 integer, parameter :: nn=(nx2-nx1+1)*(ny2-ny1+1)*(nz2-nz1+1) ! Number of elements.
 real               :: x(nx1:nx2,ny1:ny2,nz1:nz2)             ! X coordinates.
 real               :: y(nx1:nx2,ny1:ny2,nz1:nz2)             ! Y coordinates.

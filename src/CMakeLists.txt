@@ -1,6 +1,6 @@
 add_library(penf STATIC)
 target_sources(penf
-    PUBLIC
+    PRIVATE
     third_party/PENF/src/lib/penf_b_size.F90
     third_party/PENF/src/lib/penf_global_parameters_variables.F90
     third_party/PENF/src/lib/penf_stringify.F90

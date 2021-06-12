@@ -142,6 +142,7 @@ error = a_vtk_file%finalize()
 
 Note that all VTKFortran functions return an error code that can be used for sophisticated error trapping algorithms.
 
+---
 ## Build
 
 ### Get the code

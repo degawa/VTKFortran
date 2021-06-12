@@ -110,15 +110,16 @@ Go to [Top](#top)
 Let us assume our aim being to save our pure Fortran data into a VTK structured grid file in binary XML form. This is simple as
 
 ```fortran
+use, intrinsic :: iso_fortran_env
 use vtk_fortran, only : vtk_file
 
 type(vtk_file)     :: a_vtk_file                             ! A VTK file.
-integer, parameter :: nx1=0_I4P                              ! X lower bound extent.
-integer, parameter :: nx2=9_I4P                              ! X upper bound extent.
-integer, parameter :: ny1=0_I4P                              ! Y lower bound extent.
-integer, parameter :: ny2=5_I4P                              ! Y upper bound extent.
-integer, parameter :: nz1=0_I4P                              ! Z lower bound extent.
-integer, parameter :: nz2=5_I4P                              ! Z upper bound extent.
+integer, parameter :: nx1=0_int32                            ! X lower bound extent.
+integer, parameter :: nx2=9_int32                            ! X upper bound extent.
+integer, parameter :: ny1=0_int32                            ! Y lower bound extent.
+integer, parameter :: ny2=5_int32                            ! Y upper bound extent.
+integer, parameter :: nz1=0_int32                            ! Z lower bound extent.
+integer, parameter :: nz2=5_int32                            ! Z upper bound extent.
 integer, parameter :: nn=(nx2-nx1+1)*(ny2-ny1+1)*(nz2-nz1+1) ! Number of elements.
 real               :: x(nx1:nx2,ny1:ny2,nz1:nz2)             ! X coordinates.
 real               :: y(nx1:nx2,ny1:ny2,nz1:nz2)             ! Y coordinates.
@@ -142,6 +143,7 @@ error = a_vtk_file%finalize()
 
 Note that all VTKFortran functions return an error code that can be used for sophisticated error trapping algorithms.
 
+---
 ## Build
 
 ### Get the code
@@ -233,6 +235,22 @@ Install directory can also be specified at configure step 1 with the option `-DC
 When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used. A issue related to the permission may occur.
 
 When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).
+
+Another straightforward way to suppress the link error is to specify the Microsoft Linker options: Use the `LINK_FLAGS` property of the `set_target_properties` command below:
+
+```cmake
+if (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
+    list(APPEND EXTERNAL_LIB_LINKER_FLAGS " /NODEFAULTLIB:\"libifcoremt.lib\"")
+    # see community.intel.com/t5/Intel-Fortran-Compiler/Problem-linking-external-lib-in-VS2017-and-IPSXE20/m-p/1140017#M136862
+endif()
+
+set_target_properties(${TARGET_TO_LINK_VTK_IO}
+    PROPERTIES
+    Fortran_MODULE_DIRECTORY ${INCLUDE_DIR}
+    LINK_FLAGS "${EXTERNAL_LIB_LINKER_FLAGS}"
+)
+target_link_libraries(${TARGET_TO_LINK_VTK_IO} VTK_IO)
+```
 
 ### CMake option to specify a Fortran standard
 

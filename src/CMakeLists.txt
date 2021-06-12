@@ -1,3 +1,4 @@
+### build penf library
 add_library(penf STATIC)
 target_sources(penf
     PRIVATE
@@ -7,12 +8,14 @@ target_sources(penf
     third_party/PENF/src/lib/penf.F90
 )
 
+### build face library
 add_library(face STATIC)
 target_sources(face
     PRIVATE
     third_party/FACE/src/lib/face.F90
 )
 
+### build befor64 library
 add_library(befor64 STATIC)
 target_sources(befor64
     PRIVATE
@@ -21,6 +24,7 @@ target_sources(befor64
 )
 target_link_libraries(befor64 penf)
 
+### build stringifor library
 add_library(stringifor STATIC)
 target_sources(stringifor
     PRIVATE
@@ -34,6 +38,7 @@ target_link_libraries(stringifor
     befor64
 )
 
+### build foxy library
 add_library(foxy STATIC)
 target_sources(foxy
     PRIVATE
@@ -48,6 +53,7 @@ target_link_libraries(foxy
     stringifor
 )
 
+### build VTK_IO
 add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME}
     PRIVATE
@@ -75,12 +81,14 @@ add_subdirectory(tests)
 #################################################################
 # INSTALL VTK_IO library, penf.mod and vtk_fortran.mod
 #################################################################
+### install library
 install(TARGETS ${PROJECT_NAME}
     EXPORT ${PROJECT_NAME}
     ARCHIVE DESTINATION lib/${COMPILER_ID}
     LIBRARY DESTINATION lib/${COMPILER_ID}
 )
 
+### install modules
 IF (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
         install(FILES
             ${PROJECT_BINARY_DIR}/modules/$<CONFIG>/vtk_fortran.mod

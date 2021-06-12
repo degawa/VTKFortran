@@ -234,6 +234,22 @@ When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, th
 
 When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).
 
+Another straightforward way to suppress the link error is to specify the Microsoft Linker options: Use the `LINK_FLAGS` property of the `set_target_properties` command below:
+
+```cmake
+if (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
+    list(APPEND EXTERNAL_LIB_LINKER_FLAGS " /NODEFAULTLIB:\"libifcoremt.lib\"")
+    # see community.intel.com/t5/Intel-Fortran-Compiler/Problem-linking-external-lib-in-VS2017-and-IPSXE20/m-p/1140017#M136862
+endif()
+
+set_target_properties(${TARGET_TO_LINK_VTK_IO}
+    PROPERTIES
+    Fortran_MODULE_DIRECTORY ${INCLUDE_DIR}
+    LINK_FLAGS "${EXTERNAL_LIB_LINKER_FLAGS}"
+)
+target_link_libraries(${TARGET_TO_LINK_VTK_IO} VTK_IO)
+```
+
 ### CMake option to specify a Fortran standard
 
 VTKFortran has its own options to specify Fortran standards.

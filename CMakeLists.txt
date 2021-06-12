@@ -39,6 +39,7 @@ endif()
 if(CMAKE_Fortran_COMPILER_ID MATCHES Intel OR Fortran_COMPILER_NAME MATCHES "ifort*")
     set(COMPILER_ID intel)
 endif()
+OPTION(${PROJECT_NAME}_ENABLE_INSTALL_SUBDIR "Add compiler ID as a subdirectory to the install prefix" OFF)
 
 #################################################################
 # CONFIGURATION TYPES & BUILD MODE
@@ -69,9 +70,9 @@ OPTION(${PROJECT_NAME}_ENABLE_MPI "To compile MPI tests and link against MPI lib
 OPTION(${PROJECT_NAME}_ENABLE_R16P "To define a real precission type with 128 bits" OFF)
 #OPTION(${PROJECT_NAME}_ENABLE_HUGE "To use 64 bit instead 32 bit integer as a bit counter" OFF)
 
-message(${${PROJECT_NAME}_ENABLE_F03STD})
-message(${${PROJECT_NAME}_ENABLE_F08STD})
-message(${${PROJECT_NAME}_ENABLE_F18STD})
+message("Conformance to the Fortran 2003 standard ${${PROJECT_NAME}_ENABLE_F03STD}")
+message("Conformance to the Fortran 2008 standard ${${PROJECT_NAME}_ENABLE_F08STD}")
+message("Conformance to the Fortran 2018 standard ${${PROJECT_NAME}_ENABLE_F18STD}")
 
 IF (${${PROJECT_NAME}_ENABLE_F03STD})
     IF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU" OR Fortran_COMPILER_NAME MATCHES "gfortran*")

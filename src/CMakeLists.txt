@@ -60,7 +60,6 @@ target_sources(${PROJECT_NAME}
     lib/vtk_fortran.f90
     lib/vtk_fortran_dataarray_encoder.f90
     lib/vtk_fortran_parameters.f90
-    lib/vtk_fortran_parameters.mod
     lib/vtk_fortran_pvtk_file.f90
     lib/vtk_fortran_vtk_file.f90
     lib/vtk_fortran_vtk_file_xml_writer_abstract.f90

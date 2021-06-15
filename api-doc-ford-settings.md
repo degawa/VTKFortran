@@ -23,6 +23,7 @@ extra_mods: iso_fortran_env: https://gcc.gnu.org/onlinedocs/gfortran/ISO_005fFOR
             ieee_arithmetic: https://gcc.gnu.org/onlinedocs/gfortran/IEEE-modules.html
             penf: https://github.com/szaghi/PENF
             befor64: https://github.com/szaghi/BeFoR64
+            stringifor: https://github.com/szaghi/StringiFor
 graph: true
 coloured_edges: true
 print_creation_date: true

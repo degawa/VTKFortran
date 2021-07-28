@@ -1,7 +1,7 @@
 ### build penf library
 add_library(penf STATIC)
 target_sources(penf
-    PRIVATE
+    PUBLIC
     third_party/PENF/src/lib/penf_b_size.F90
     third_party/PENF/src/lib/penf_global_parameters_variables.F90
     third_party/PENF/src/lib/penf_stringify.F90
@@ -11,14 +11,14 @@ target_sources(penf
 ### build face library
 add_library(face STATIC)
 target_sources(face
-    PRIVATE
+    PUBLIC
     third_party/FACE/src/lib/face.F90
 )
 
 ### build befor64 library
 add_library(befor64 STATIC)
 target_sources(befor64
-    PRIVATE
+    PUBLIC
     third_party/BeFoR64/src/lib/befor64_pack_data_m.F90
     third_party/BeFoR64/src/lib/befor64.F90
 )
@@ -27,7 +27,7 @@ target_link_libraries(befor64 penf)
 ### build stringifor library
 add_library(stringifor STATIC)
 target_sources(stringifor
-    PRIVATE
+    PUBLIC
     third_party/StringiFor/src/lib/stringifor.F90
     third_party/StringiFor/src/lib/stringifor_string_t.F90
 )
@@ -41,7 +41,7 @@ target_link_libraries(stringifor
 ### build foxy library
 add_library(foxy STATIC)
 target_sources(foxy
-    PRIVATE
+    PUBLIC
     third_party/FoXy/src/lib/foxy.f90
     third_party/FoXy/src/lib/foxy_xml_tag.F90
     third_party/FoXy/src/lib/foxy_xml_file.f90
@@ -56,7 +56,7 @@ target_link_libraries(foxy
 ### build VTK_IO
 add_library(${PROJECT_NAME} STATIC)
 target_sources(${PROJECT_NAME}
-    PRIVATE
+    PUBLIC
     lib/vtk_fortran.f90
     lib/vtk_fortran_dataarray_encoder.f90
     lib/vtk_fortran_parameters.f90

@@ -54,6 +54,9 @@ IF(NOT CMAKE_BUILD_TYPE)
   SET_PROPERTY(CACHE CMAKE_BUILD_TYPE PROPERTY STRINGS NONE DEBUG RELEASE)
 ENDIF(NOT CMAKE_BUILD_TYPE)
 
+if (NOT ${CMAKE_BUILD_TYPE} MATCHES Release)
+    set(CMAKE_BUILD_TYPE "Debug")
+endif()
 
 #################################################################
 # Setting up options
@@ -115,7 +118,7 @@ IF (${${PROJECT_NAME}_ENABLE_F18STD})
     ENDIF ()
 ENDIF ()
 
-IF (${${PROJECT_NAME}_ENABLE_OPTIMIZE})
+IF (${${PROJECT_NAME}_ENABLE_OPTIMIZE} OR ${CMAKE_BUILD_TYPE} MATCHES Release)
     IF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU" OR Fortran_COMPILER_NAME MATCHES "gfortran*")
         SET(EXTRA_FLAGS "${EXTRA_FLAGS}  -O3")
     ELSEIF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel" OR Fortran_COMPILER_NAME MATCHES "ifort*")
@@ -173,7 +176,7 @@ IF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "GNU" OR Fortran_COMPILER_NAME MATCHES
   set (CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g3 -Warray-bounds -Wcharacter-truncation -Wline-truncation -Wimplicit-interface -Wimplicit-procedure -Wunderflow -Wuninitialized -fcheck=all -fmodule-private -ffree-line-length-132 -fimplicit-none -fbacktrace -fdump-core -finit-real=nan " CACHE STRING "" FORCE)
 ELSEIF (${CMAKE_Fortran_COMPILER_ID} STREQUAL "Intel" OR Fortran_COMPILER_NAME MATCHES "ifort*")
   # ifort
-  IF (CMAKE_SYSTEM_NAME STREQUAL "Windows")
+  IF (WIN32)
     set(FORTRAN_FLAGS "/fpp /assume=realloc_lhs /nologo")
     set (CMAKE_Fortran_FLAGS "${FORTRAN_FLAGS} ${STD_FLAGS} " CACHE STRING "" FORCE)
     set (CMAKE_Fortran_FLAGS_RELEASE "${EXTRA_FLAGS} " CACHE STRING "" FORCE)
@@ -191,10 +194,13 @@ ELSE ()
   set (CMAKE_Fortran_FLAGS_DEBUG   "-O0 -g")
 ENDIF ()
 
-message("Fortra_FLAGS: ${FORTRAN_FLAGS}")
+# message("Fortra_FLAGS: ${FORTRAN_FLAGS}")
 message("CMAKE_Fortran_FLAGS: ${CMAKE_Fortran_FLAGS}")
-message("CMAKE_Fortran_FLAGS_RELEASE: ${CMAKE_Fortran_FLAGS_RELEASE}")
-message("CMAKE_Fortran_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
+if(${CMAKE_BUILD_TYPE} MATCHES Release)
+    message("CMAKE_Fortran_FLAGS_RELEASE: ${CMAKE_Fortran_FLAGS_RELEASE}")
+else()
+    message("CMAKE_Fortran_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
+endif()
 
 
 #################################################################

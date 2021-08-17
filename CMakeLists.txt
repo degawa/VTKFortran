@@ -194,7 +194,7 @@ ENDIF ()
 message("Fortra_FLAGS: ${FORTRAN_FLAGS}")
 message("CMAKE_Fortran_FLAGS: ${CMAKE_Fortran_FLAGS}")
 message("CMAKE_Fortran_FLAGS_RELEASE: ${CMAKE_Fortran_FLAGS_RELEASE}")
-message("CMAKE_Fortra_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
+message("CMAKE_Fortran_FLAGS_DEBUG: ${CMAKE_Fortran_FLAGS_DEBUG}")
 
 
 #################################################################

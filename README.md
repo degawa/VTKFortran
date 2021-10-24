@@ -149,119 +149,37 @@ Note that all VTKFortran functions return an error code that can be used for sop
 ### Get the code
 
 ```sh
-git clone --recursive https://github.com/degawa/VTKFortran.git
+git clone https://github.com/degawa/VTKFortran.git -b vtkfortran-fpm
 cd VTKFortran
-git submodule update --init --recursive
 ```
 
-### Build with CMake
+### Build with fpm
 
-The simplest way to build is to run
+The fpm can build the project with options:
 
 ```sh
-cmake -B build
-cmake --build build
+fpm build --profile {debug|release} --flag "other compiler options"
 ```
-#### Tested compilers and generators
 
-|Compiler and version|Generator|CMake version|OS|Architecture|
-|:--|:--|:--|:--|:--|
-|gfortran 8.4.0|Unix Makefiles|3.20.2|Ubuntu 18.04|x86_64|
-|gfortran 9.3.0|Unix Makefiles|3.16.3|Ubuntu 20.04|x86_64|
-|gfotran 8.1.0 (MinGW-w64)|Unix Makefiles|3.20.3|Windows 10|x86_64|
-|Intel OneAPI 2021.1|Visual Studio 15 2017|3.20.3|Windows 10|x86_64|
+`--profile` selects predefined compiler options passing to a Fortran compiler.
 
-#### Compile using gfortran
-1. To configure the build, run
+- `debug`: `-Wall -Wextra -Wimplicit-interface -fPIC -fmax-errors=1 -g -fcheck=bounds -fcheck=array-temps -fbacktrace -fcoarray=single`.
+- `release`: `-O3 -funroll-loops -Wimplicit-interface -fPIC -fmax-errors=1 -fcoarray=single`
+
+`--flag` option specifies other options to pass to a Fortran compiler. The options specified with `--flag` are given to the project **and the dependent projects**. So `--flag` is used to specify preprocessor identifiers for the dependent projects.
+
+To compile VTKFortran, `-D_R16P`, enabiling real128 support, is necessary to specify for building the dependent project, PENF. If the compiler supports Unicode character set, speify `-D_UCS4_SUPPORTED` to enable support it.
+
+The following command can generally be used for latest compilers.
 
 ```sh
-cmake -B build -G "Unix Makefiles" -DCMAKE_Fortran_COMPILER=gfortran -DCMAKE_BUILD_TYPE=Release
+fpm build --profile {debug|release} --flag "-D_R16P -D_UCS4_SUPPORTED"
 ```
 
-`-DCMAKE_BUILD_TYPE={Debug|Release}` is optional. The available generators can be confimed to run `cmake --help`.
+### Test with fpm
 
-2. To build the library, run
+To test VTKFortra, run the following command:
 
 ```sh
-cmake --build build --config Release
-```
-
-`--config {Debug|Release}` is optional.
-
-The libray `libVTK_IO.a` is created in `build/lib` and module files are created in `build/modules`.
-
-3. To copy created the modules and the library, run
-
-```sh
-cmake --install build --prefix /path/to/your_project_directory
-```
-
-The modules, `penf.mod` and `vtk_fortran.mod`, are copied to `your_project_directory/include` and the library, `libVTK_IO.a`, is copied to `your_project_directory/lib`.
-
-Install directory can also be specified at configure step 1 with the option `-DCMAKE_INSTALL_PREFIX=/path/to/your_project_directory`.
-When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used.
-
-#### Compile using Intel Fortran on Windows
-1. To configure the build, run
-
-```sh
-cmake -B build -G "Visual Studio 15 2017"  -DCMAKE_Fortran_COMPILER=ifort -DCMAKE_BUILD_TYPE=Release -DCMAKE_GENERATOR_PLATFORM=x64
-```
-
-`Visual Studio 15 2017` is just an example.
-`-DCMAKE_BUILD_TYPE={Debug|Release}` is optional, but `-DCMAKE_GENERATOR_PLATFORM={Win32|x64}` has to be specified to select the target environment properly.
-
-2. To build the library, run
-
-```sh
-cmake --build build --config Release
-```
-
-`--config {Debug|Release}` is recommended to specify the solution configuration.
-
-The libray `VTK_IO.lib` is created in `build/lib/<Solution Configuration>` and module files are created in `build/modules/<Solution Configuration>`. When you choose `--config Debug`, `<Solution Configuration>` is replased to `DEBUG`.
-
-3. To copy created the modules and the library, run
-
-```sh
-cmake --install build --config Release --prefix path/to/your_project_directory
-```
-
-The modules, `penf.mod` and `vtk_fortran.mod`, are copied to `your_project_directory\include` and the library, `VTK_IO.lib`, is copied to `your_project_directory\lib`.
-
-`--config {Debug|Release}` option is necessary to determine `<Solution Configuration>`.
-
-Install directory can also be specified at configure step 1 with the option `-DCMAKE_INSTALL_PREFIX=path/to/your_project_directory`.
-When the both options (`--prefix` and `-DCMAKE_INSTALL_PREFIX=`) are omitted, the default install directory is used. A issue related to the permission may occur.
-
-When link error **LNK2005** is occured related to run-time library, such as libifcoremt.lib and libifcoremdd.lib, run-time library options has to be specified to select static or dynamic (`/libs:static` or `/libs:DLL`), single- or multi-thread (`/nothreads` or `/threads`), and no-debug or debug (`/nodbglibs` or `/dbglibs`).
-
-Another straightforward way to suppress the link error is to specify the Microsoft Linker options: Use the `LINK_FLAGS` property of the `set_target_properties` command below:
-
-```cmake
-if (${CMAKE_GENERATOR} MATCHES "Visual Studio*")
-    list(APPEND EXTERNAL_LIB_LINKER_FLAGS " /NODEFAULTLIB:\"libifcoremt.lib\"")
-    # see community.intel.com/t5/Intel-Fortran-Compiler/Problem-linking-external-lib-in-VS2017-and-IPSXE20/m-p/1140017#M136862
-endif()
-
-set_target_properties(${TARGET_TO_LINK_VTK_IO}
-    PROPERTIES
-    Fortran_MODULE_DIRECTORY ${INCLUDE_DIR}
-    LINK_FLAGS "${EXTERNAL_LIB_LINKER_FLAGS}"
-)
-target_link_libraries(${TARGET_TO_LINK_VTK_IO} VTK_IO)
-```
-
-### CMake option to specify a Fortran standard
-
-VTKFortran has its own options to specify Fortran standards.
-
-- VTK_IO_ENABLE_F03STD: to force strict conformance to the Fortran 2003 standard
-- VTK_IO_ENABLE_F08STD: to force strict conformance to the Fortran 2008 standard
-- VTK_IO_ENABLE_F18STD: to force strict conformance to the Fortran 2018 standard
-
-To specify a Fortran standard, use one of these options in step 1 of the build procedure.
-
-```sh
-cmake -B build -DVTK_IO_ENABLE_F18STD=ON
+fpm test --profile {debug|release} --flag "-D_R16P -D_UCS4_SUPPORTED"
 ```

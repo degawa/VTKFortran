@@ -170,10 +170,23 @@ fpm build --profile {debug|release} --flag "other compiler options"
 
 To compile VTKFortran, `-D_R16P`, enabiling real128 support, is necessary to specify for building the dependent project, PENF. If the compiler supports Unicode character set, speify `-D_UCS4_SUPPORTED` to enable support it.
 
-The following command can generally be used for latest compilers.
+The following command can generally be used for latest compilers:
 
 ```sh
-fpm build --profile {debug|release} --flag "-D_R16P -D_UCS4_SUPPORTED"
+fpm build --profile debug --flag "-D_R16P -D_UCS4_SUPPORTED"
+```
+
+or
+
+```sh
+fpm build --profile release --flag "-D_R16P -D_UCS4_SUPPORTED"
+```
+
+To use VTKFortran within fpm projects, add the following section to project's fpm.toml file:
+
+```
+[dependencies]
+VTKFortran = { git="https://github.com/degawa/VTKFortran", branch="vtkfortran-fpm" }
 ```
 
 ### Test with fpm

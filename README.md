@@ -173,13 +173,13 @@ To compile VTKFortran, `-D_R16P`, enabiling real128 support, is necessary to spe
 The following command can generally be used for latest compilers:
 
 ```sh
-fpm build --profile debug --flag "-D_R16P -D_UCS4_SUPPORTED"
+fpm build --profile debug --flag "-D_R16P"
 ```
 
 or
 
 ```sh
-fpm build --profile release --flag "-D_R16P -D_UCS4_SUPPORTED"
+fpm build --profile release --flag "-D_R16P"
 ```
 
 To use VTKFortran within fpm projects, add the following section to project's fpm.toml file:
@@ -194,5 +194,5 @@ VTKFortran = { git="https://github.com/degawa/VTKFortran", branch="vtkfortran-fp
 To test VTKFortra, run the following command:
 
 ```sh
-fpm test --profile {debug|release} --flag "-D_R16P -D_UCS4_SUPPORTED"
+fpm test --profile {debug|release} --flag "-D_R16P"
 ```

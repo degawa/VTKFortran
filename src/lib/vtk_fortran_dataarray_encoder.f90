@@ -35,6 +35,7 @@ interface encode_ascii_dataarray
                    encode_ascii_dataarray1_rank4_I4P, &
                    encode_ascii_dataarray1_rank4_I2P, &
                    encode_ascii_dataarray1_rank4_I1P, &
+                   encode_ascii_dataarray2_rank2_R8P, &
                    encode_ascii_dataarray3_rank1_R8P, &
                    encode_ascii_dataarray3_rank1_R4P, &
                    encode_ascii_dataarray3_rank1_I8P, &
@@ -86,6 +87,7 @@ interface encode_binary_dataarray
                    encode_binary_dataarray1_rank4_I4P, &
                    encode_binary_dataarray1_rank4_I2P, &
                    encode_binary_dataarray1_rank4_I1P, &
+                   encode_binary_dataarray2_rank2_R8P, &
                    encode_binary_dataarray3_rank1_R8P, &
                    encode_binary_dataarray3_rank1_R4P, &
                    encode_binary_dataarray3_rank1_I8P, &
@@ -895,6 +897,32 @@ contains
     enddo
   enddo
   endfunction encode_ascii_dataarray1_rank4_I1P
+
+  function encode_ascii_dataarray2_rank2_R8P(x, y) result(code)
+  !< Encode (Base64) a dataarray with 2 components of rank 2 (R8P).
+  real(R8P),       intent(in)   :: x(1:,1:)    !< X component.
+  real(R8P),       intent(in)   :: y(1:,1:)    !< Y component.
+  character(len=:), allocatable :: code        !< Encoded base64 dataarray.
+  integer(I4P)                  :: n1          !< Counter.
+  integer(I4P)                  :: n2          !< Counter.
+  integer(I4P)                  :: l           !< Length
+  integer(I4P)                  :: sp          !< String pointer
+  integer(I4P)                  :: size_n1     !< Dimension 1 size
+  integer(I4P)                  :: size_n2     !< Dimension 2 size
+
+  size_n1 = size(x, dim=1)
+  size_n2 = size(x, dim=2)
+  
+  l = DR8P*2 + 1 ! 2 real64 data and 1 white space
+  sp = 0
+  code = repeat(' ',l*size_n1*size_n2)
+  do n2=1, size(x, dim=2)
+    do n1=1, size(x, dim=1)
+      code(sp+1:sp+l) = str(n=x(n1, n2))//' '//str(n=y(n1, n2))
+      sp = sp + l
+    enddo
+  enddo
+  endfunction encode_ascii_dataarray2_rank2_R8P
 
   function encode_ascii_dataarray3_rank1_R16P(x, y, z) result(code)
   !< Encode (Base64) a dataarray with 3 components of rank 1 (R16P).
@@ -1982,6 +2010,28 @@ contains
   call pack_data(a1=[int(nn*BYI1P, I4P)], a2=reshape(x, [nn]), packed=xp)
   call b64_encode(n=xp, code=code)
   endfunction encode_binary_dataarray1_rank4_I1P
+
+  function encode_binary_dataarray2_rank2_R8P(x, y) result(code)
+  !< Encode (Base64) a dataarray with 2 components of rank 2 (R8P).
+  real(R8P),    intent(in)      :: x(1:,1:) !< X component.
+  real(R8P),    intent(in)      :: y(1:,1:) !< Y component.
+  character(len=:), allocatable :: code     !< Encoded base64 dataarray.
+  integer(I1P),     allocatable :: xy(:)    !< Packed data.
+  integer(I4P)                  :: nn1      !< Number of elements along dim 1.
+  integer(I4P)                  :: nn2      !< Number of elements along dim 2.
+  integer(I4P)                  :: nn       !< Number of elements.
+  integer(I4P)                  :: n1       !< Counter.
+  integer(I4P)                  :: n2       !< Counter.
+
+  nn1 = size(x, dim=1)
+  nn2 = size(x, dim=2)
+  nn = nn1*nn2
+  call pack_data(a1=[int(2*nn*BYR8P, I4P)], &
+                 a2=[((x(n1, n2), y(n1, n2), n1=1, nn1),  &
+                                             n2=1, nn2)], &
+                 packed=xy)
+  call b64_encode(n=xy,code=code)
+  endfunction encode_binary_dataarray2_rank2_R8P
 
   function encode_binary_dataarray3_rank1_R8P(x, y, z) result(code)
   !< Encode (Base64) a dataarray with 3 components of rank 1 (R8P).

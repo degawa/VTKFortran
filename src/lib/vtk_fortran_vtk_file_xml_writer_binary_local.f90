@@ -53,6 +53,7 @@ type, extends(xml_writer_abstract) :: xml_writer_binary_local
       procedure, pass(self) :: write_dataarray1_rank4_I2P !< Write dataarray 1, rank 4, I2P.
       procedure, pass(self) :: write_dataarray1_rank4_I1P !< Write dataarray 1, rank 4, I1P.
       procedure, pass(self) :: write_dataarray3_rank1_R8P !< Write dataarray 3, rank 1, R8P.
+      procedure, pass(self) :: write_dataarray2_rank2_R8P !< Write dataarray 2, rank 2, R8P.
       procedure, pass(self) :: write_dataarray3_rank1_R4P !< Write dataarray 3, rank 1, R4P.
       procedure, pass(self) :: write_dataarray3_rank1_I8P !< Write dataarray 3, rank 1, I8P.
       procedure, pass(self) :: write_dataarray3_rank1_I4P !< Write dataarray 3, rank 1, I4P.
@@ -645,6 +646,26 @@ contains
                                  is_tuples=is_tuples)
    error = self%error
    endfunction write_dataarray1_rank4_I1P
+
+   function write_dataarray2_rank2_R8P(self, data_name, x, y, is_tuples) result(error)
+   !< Write `<DataArray... NumberOfComponents="2"...>...</DataArray>` tag (R8P).
+   class(xml_writer_binary_local), intent(inout)        :: self         !< Writer.
+   character(*),                   intent(in)           :: data_name    !< Data name.
+   real(R8P),                      intent(in)           :: x(1:,1:)     !< X component of data variable.
+   real(R8P),                      intent(in)           :: y(1:,1:)     !< Y component of data variable.
+   logical,                        intent(in), optional :: is_tuples    !< Use "NumberOfTuples" instead of "NumberOfComponents".
+   integer(I4P)                                         :: error        !< Error status.
+   character(len=:), allocatable                        :: data_type    !< Data type.
+   integer(I4P)                                         :: n_components !< Number of components.
+   character(len=:), allocatable                        :: code         !< Data variable encoded, binary or Base64 codec.
+
+   data_type = 'Float64'
+   n_components = 2
+   code = encode_binary_dataarray(x=x, y=y)
+   call self%write_dataarray_tag(data_type=data_type, number_of_components=n_components, data_name=data_name, data_content=code, &
+                                 is_tuples=is_tuples)
+   error = self%error
+   endfunction write_dataarray2_rank2_R8P
 
    function write_dataarray3_rank1_R8P(self, data_name, x, y, z, is_tuples) result(error)
    !< Write `<DataArray... NumberOfComponents="3"...>...</DataArray>` tag (R8P).

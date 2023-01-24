@@ -3,7 +3,7 @@ version = "2.0.1"
 description = "pure Fortran VTK (XML) API"
 
 [library]
-source-dir="src"
+source-dir="src/lib"
 
 [dependencies]
 StringiFor = { git = "https://github.com/degawa/StringiFor", branch = "stringifor-fpm" }

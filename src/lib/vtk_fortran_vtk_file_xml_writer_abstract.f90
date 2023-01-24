@@ -107,6 +107,7 @@ type, abstract :: xml_writer_abstract
                write_geo_strg_data3_rank1_R4P, &
                write_geo_strg_data3_rank3_R8P, &
                write_geo_strg_data3_rank3_R4P, &
+               write_geo_rect_data2_rank1_R8P, &
                write_geo_rect_data3_rank1_R8P, &
                write_geo_rect_data3_rank1_R4P, &
                write_geo_unst_data1_rank2_R8P, &
@@ -974,15 +975,29 @@ contains
    buffer = ''
    select case(self%topology%chars())
    case('RectilinearGrid', 'StructuredGrid')
-      buffer = 'WholeExtent="'//                             &
-               trim(str(n=nx1))//' '//trim(str(n=nx2))//' '//&
-               trim(str(n=ny1))//' '//trim(str(n=ny2))//' '//&
-               trim(str(n=nz1))//' '//trim(str(n=nz2))//'"'
+      buffer = 'WholeExtent="'//&
+               extent(nx1, nx2)//' '//&
+               extent(ny1, ny2)//' '//&
+               extent(nz1, nz2)//'"'
+
+      if(either_does_not_exist(nx1, nx2).or.&
+         either_does_not_exist(ny1, ny2).or.&
+         either_does_not_exist(nz1, nz2))then
+           self%error = 1
+           return
+      end if
    case('PRectilinearGrid', 'PStructuredGrid')
-      buffer = 'WholeExtent="'//                             &
-               trim(str(n=nx1))//' '//trim(str(n=nx2))//' '//&
-               trim(str(n=ny1))//' '//trim(str(n=ny2))//' '//&
-               trim(str(n=nz1))//' '//trim(str(n=nz2))//'" GhostLevel="#"'
+      buffer = 'WholeExtent="'//&
+               extent(nx1, nx2)//' '//&
+               extent(ny1, ny2)//' '//&
+               extent(nz1, nz2)//'" GhostLevel="#"'
+
+      if(either_does_not_exist(nx1, nx2).or.&
+         either_does_not_exist(ny1, ny2).or.&
+         either_does_not_exist(nz1, nz2))then
+           self%error = 1
+           return
+      end if
    case('PUnstructuredGrid')
       buffer = 'GhostLevel="0"'
    endselect
@@ -1009,6 +1024,24 @@ contains
                                        attributes='type="'//trim(mesh_kind)//'" NumberOfComponents="3" Name="Points"')
       call self%write_end_tag(name='PPoints')
    endselect
+   contains
+     function extent(a, b) result(extent_str)
+       integer(I4P), intent(in), optional :: a
+       integer(I4P), intent(in), optional :: b
+       character(:), allocatable :: extent_str
+       
+       if(present(a).and.present(b))then
+         extent_str=trim(str(n=a))//' '//trim(str(n=b))
+       else
+         extent_str=trim(str(n=1))//' '//trim(str(n=1))
+       end if
+     end function extent
+     logical function either_does_not_exist(a, b)
+       integer(I4P), intent(in), optional :: a
+       integer(I4P), intent(in), optional :: b
+       either_does_not_exist = (present(a).and..not.present(b).or.&
+                                present(b).and..not.present(a))
+     end function either_does_not_exist
    endsubroutine write_topology_tag
 
    ! write_dataarray
@@ -1170,21 +1203,45 @@ contains
    ! write_piece methods
    function write_piece_start_tag(self, nx1, nx2, ny1, ny2, nz1, nz2) result(error)
    !< Write `<Piece ...>` start tag.
-   class(xml_writer_abstract), intent(inout) :: self           !< Writer.
-   integer(I4P),               intent(in)    :: nx1            !< Initial node of x axis.
-   integer(I4P),               intent(in)    :: nx2            !< Final node of x axis.
-   integer(I4P),               intent(in)    :: ny1            !< Initial node of y axis.
-   integer(I4P),               intent(in)    :: ny2            !< Final node of y axis.
-   integer(I4P),               intent(in)    :: nz1            !< Initial node of z axis.
-   integer(I4P),               intent(in)    :: nz2            !< Final node of z axis.
-   integer(I4P)                              :: error          !< Error status.
-   type(string)                              :: tag_attributes !< Tag attributes.
+   class(xml_writer_abstract), intent(inout)        :: self           !< Writer.
+   integer(I4P),               intent(in)           :: nx1            !< Initial node of x axis.
+   integer(I4P),               intent(in)           :: nx2            !< Final node of x axis.
+   integer(I4P),               intent(in)           :: ny1            !< Initial node of y axis.
+   integer(I4P),               intent(in)           :: ny2            !< Final node of y axis.
+   integer(I4P),               intent(in), optional :: nz1            !< Initial node of z axis.
+   integer(I4P),               intent(in), optional :: nz2            !< Final node of z axis.
+   integer(I4P)                                     :: error          !< Error status.
+   type(string)                                     :: tag_attributes !< Tag attributes.
 
    tag_attributes = 'Extent="'//trim(str(n=nx1))//' '//trim(str(n=nx2))//' '// &
                                 trim(str(n=ny1))//' '//trim(str(n=ny2))//' '// &
-                                trim(str(n=nz1))//' '//trim(str(n=nz2))//'"'
+                                extent(nz1, nz2)//'"'
+
+   if(either_does_not_exist(nz1, nz2))then
+     error = -1
+     return
+   end if
+
    call self%write_start_tag(name='Piece', attributes=tag_attributes%chars())
    error = self%error
+   contains
+     function extent(a, b) result(extent_str)
+       integer(I4P), intent(in), optional :: a
+       integer(I4P), intent(in), optional :: b
+       character(:), allocatable :: extent_str
+       
+       if(present(a).and.present(b))then
+         extent_str=trim(str(n=a))//' '//trim(str(n=b))
+       else
+         extent_str=trim(str(n=1))//' '//trim(str(n=1))
+       end if
+     end function extent
+     logical function either_does_not_exist(a, b)
+       integer(I4P), intent(in), optional :: a
+       integer(I4P), intent(in), optional :: b
+       either_does_not_exist = (present(a).and..not.present(b).or.&
+                                present(b).and..not.present(a))
+     end function either_does_not_exist
    endfunction write_piece_start_tag
 
    function write_piece_start_tag_unst(self, np, nc) result(error)
@@ -1210,6 +1267,21 @@ contains
    endfunction write_piece_end_tag
 
    ! write_geo_rect methods
+   function write_geo_rect_data2_rank1_R8P(self, x, y) result(error)
+   !< Write mesh with **RectilinearGrid** topology (data 3, rank 1, R8P).
+   class(xml_writer_abstract), intent(inout) :: self  !< Writer.
+   real(R8P),                  intent(in)    :: x(1:) !< X coordinates.
+   real(R8P),                  intent(in)    :: y(1:) !< Y coordinates.
+   integer(I4P)                              :: error !< Error status.
+
+   call self%write_start_tag(name='Coordinates')
+   error = self%write_dataarray(data_name='X', x=x)
+   error = self%write_dataarray(data_name='Y', x=y)
+   error = self%write_dataarray(data_name='Z', x=[0d0])
+   call self%write_end_tag(name='Coordinates')
+   error = self%error
+   endfunction write_geo_rect_data2_rank1_R8P
+
    function write_geo_rect_data3_rank1_R8P(self, x, y, z) result(error)
    !< Write mesh with **RectilinearGrid** topology (data 3, rank 1, R8P).
    class(xml_writer_abstract), intent(inout) :: self  !< Writer.

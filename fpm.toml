@@ -10,6 +10,41 @@ auto-tests = false
 [library]
 source-dir="src/lib"
 
+[[test]]
+name = "vtk_fortran_use_module_basic"
+source-dir = "src/test"
+main = "vtk_fortran_use_module_basic.f90"
+
+[[test]]
+name = "vtk_fortran_write_pvts"
+source-dir = "src/test"
+main = "vtk_fortran_write_pvts.f90"
+
+[[test]]
+name = "vtk_fortran_write_volatile"
+source-dir = "src/test"
+main = "vtk_fortran_write_volatile.f90"
+
+[[test]]
+name = "vtk_fortran_write_vtm"
+source-dir = "src/test"
+main = "vtk_fortran_write_vtm.f90"
+
+[[test]]
+name = "vtk_fortran_write_vtr"
+source-dir = "src/test"
+main = "vtk_fortran_write_vtr.f90"
+
+[[test]]
+name = "vtk_fortran_write_vts"
+source-dir = "src/test"
+main = "vtk_fortran_write_vts.f90"
+
+[[test]]
+name = "vtk_fortran_write_vtu"
+source-dir = "src/test"
+main = "vtk_fortran_write_vtu.f90"
+
 [dependencies]
 StringiFor = { git = "https://github.com/degawa/StringiFor", branch = "stringifor-fpm" }
 FoXy = { git = "https://github.com/degawa/FoXy", branch = "foxy-fpm" }

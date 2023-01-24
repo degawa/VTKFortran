@@ -1,6 +1,9 @@
 name = "VTKFortran"
-version = "2.0.1"
+copyright = "Copyright © 2022, Stefano Zaghi"
+license = "Multiple licenses"
 description = "pure Fortran VTK (XML) API"
+maintainer = "Stefano Zaghi"
+homepage = "https://github.com/szaghi/VTKFortran"
 
 [build]
 auto-executables = false

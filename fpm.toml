@@ -2,6 +2,11 @@ name = "VTKFortran"
 version = "2.0.1"
 description = "pure Fortran VTK (XML) API"
 
+[build]
+auto-executables = false
+auto-examples = false
+auto-tests = false
+
 [library]
 source-dir="src/lib"
 

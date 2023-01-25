@@ -1039,8 +1039,8 @@ contains
      logical function either_does_not_exist(a, b)
        integer(I4P), intent(in), optional :: a
        integer(I4P), intent(in), optional :: b
-       either_does_not_exist = (present(a).and..not.present(b).or.&
-                                present(b).and..not.present(a))
+       either_does_not_exist = ((present(a).and..not.present(b)).or.&
+                                (present(b).and..not.present(a)))
      end function either_does_not_exist
    endsubroutine write_topology_tag
 
@@ -1239,8 +1239,8 @@ contains
      logical function either_does_not_exist(a, b)
        integer(I4P), intent(in), optional :: a
        integer(I4P), intent(in), optional :: b
-       either_does_not_exist = (present(a).and..not.present(b).or.&
-                                present(b).and..not.present(a))
+       either_does_not_exist = ((present(a).and..not.present(b)).or.&
+                                (present(b).and..not.present(a)))
      end function either_does_not_exist
    endfunction write_piece_start_tag
 

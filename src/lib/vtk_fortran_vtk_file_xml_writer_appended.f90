@@ -184,8 +184,18 @@ contains
     self%encoding = 'raw'
   case('BINARY-APPENDED')
     self%encoding = 'base64'
+  case default
+    self%error_message = "unsupported encoding '"//self%encoding%chars()//"'"
+    self%error = 1
+    return
   endselect
+
   call self%open_xml_file(filename=filename)
+  if(self%error /=0)then
+    error = self%error
+    return
+  endif
+
   call self%write_header_tag
   call self%write_topology_tag(nx1=nx1, nx2=nx2, ny1=ny1, ny2=ny2, nz1=nz1, nz2=nz2, mesh_kind=mesh_kind)
   self%ioffset = 0
@@ -222,12 +232,13 @@ contains
   !< Open scratch file.
   class(xml_writer_appended), intent(inout) :: self  !< Writer.
 
-  open(newunit=self%scratch, &
-       form='UNFORMATTED',   &
-       access='STREAM',      &
-       action='READWRITE',   &
-       status='SCRATCH',     &
-       iostat=self%error)
+  open(newunit=self%scratch,   &
+       form='UNFORMATTED',     &
+       access='STREAM',        &
+       action='READWRITE',     &
+       status='SCRATCH',       &
+       iostat=self%error,      &
+       iomsg=self%error_message)
   endsubroutine open_scratch_file
 
   subroutine close_scratch_file(self)
@@ -1292,22 +1303,23 @@ contains
   integer(I1P), allocatable                 :: dataarray_I1P(:)  !< Dataarray buffer of I1P.
 
   call self%write_start_tag(name='AppendedData', attributes='encoding="'//self%encoding%chars()//'"')
-  write(unit=self%xml, iostat=self%error)'_'
-  endfile(unit=self%scratch, iostat=self%error)
-  rewind(unit=self%scratch, iostat=self%error)
+  write(unit=self%xml, iostat=self%error, iomsg=self%error_message)'_'
+  endfile(unit=self%scratch, iostat=self%error, iomsg=self%error_message)
+  rewind(unit=self%scratch, iostat=self%error, iomsg=self%error_message)
   do
     call read_dataarray_from_scratch
     if (self%error==0) call write_dataarray_on_xml
     if (is_iostat_end(self%error)) exit
   enddo
-  close(unit=self%scratch, iostat=self%error)
-  write(unit=self%xml, iostat=self%error)end_rec
+  close(unit=self%scratch, iostat=self%error, iomsg=self%error_message)
+  write(unit=self%xml, iostat=self%error, iomsg=self%error_message)end_rec
   call self%write_end_tag(name='AppendedData')
   contains
     subroutine read_dataarray_from_scratch
     !< Read the current dataaray from scratch file.
+    character(len=1), parameter :: LF  = achar(int(z'0A')) ! NL line feed, new line
 
-    read(unit=self%scratch, iostat=self%error, end=10)n_byte, dataarray_type, dataarray_dim
+    read(unit=self%scratch, iostat=self%error, end=10, iomsg=self%error_message)n_byte, dataarray_type, dataarray_dim
     select case(dataarray_type)
     case('R8')
       if (allocated(dataarray_R8P)) deallocate(dataarray_R8P) ; allocate(dataarray_R8P(1:dataarray_dim))
@@ -1329,6 +1341,9 @@ contains
       read(unit=self%scratch, iostat=self%error)dataarray_I1P
     case default
       self%error = 1
+      self%error_message = ' error: bad dataarray_type = '//dataarray_type//LF//&
+                           ' bytes = '//trim(str(n=n_byte))//LF//&
+                           ' dataarray dimension = '//trim(str(n=dataarray_dim))
       write (stderr,'(A)')' error: bad dataarray_type = '//dataarray_type
       write (stderr,'(A)')' bytes = '//trim(str(n=n_byte))
       write (stderr,'(A)')' dataarray dimension = '//trim(str(n=dataarray_dim))
@@ -1360,6 +1375,9 @@ contains
       case('I1')
         write(unit=self%xml, iostat=self%error)n_byte, dataarray_I1P
         deallocate(dataarray_I1P)
+      case default
+        self%error = 1
+        self%error_message = "Unsupported data type '"//dataarray_type//"'"
       endselect
     else
       select case(dataarray_type)
@@ -1381,6 +1399,9 @@ contains
       case('I1')
         code = encode_binary_dataarray(x=dataarray_I1P)
         write(unit=self%xml, iostat=self%error)code
+      case default
+        self%error = 1
+        self%error_message = "Unsupported data type '"//dataarray_type//"'"
       endselect
     endif
     endsubroutine write_dataarray_on_xml
@@ -1420,6 +1441,9 @@ contains
     n_byte = nn*BYI1P
     write(unit=self%scratch, iostat=self%error)n_byte, 'I1', nn
     write(unit=self%scratch, iostat=self%error)x
+  class default
+    self%error = 1
+    self%error_message = "Unsupported data type of 'x'"
   endselect
   endfunction write_on_scratch_dataarray1_rank1
 
@@ -1456,6 +1480,9 @@ contains
     n_byte = nn*BYI1P
     write(unit=self%scratch, iostat=self%error)n_byte, 'I1', nn
     write(unit=self%scratch, iostat=self%error)x
+  class default
+    self%error = 1
+    self%error_message = "Unsupported data type of 'x'"
   endselect
   endfunction write_on_scratch_dataarray1_rank2
 
@@ -1492,6 +1519,9 @@ contains
     n_byte = nn*BYI1P
     write(unit=self%scratch, iostat=self%error)n_byte, 'I1', nn
     write(unit=self%scratch, iostat=self%error)x
+  class default
+    self%error = 1
+    self%error_message = "Unsupported data type of 'x'"
   endselect
   endfunction write_on_scratch_dataarray1_rank3
 
@@ -1528,6 +1558,9 @@ contains
     n_byte = nn*BYI1P
     write(unit=self%scratch, iostat=self%error)n_byte, 'I1', nn
     write(unit=self%scratch, iostat=self%error)x
+  class default
+    self%error = 1
+    self%error_message = "Unsupported data type of 'x'"
   endselect
   endfunction write_on_scratch_dataarray1_rank4
 

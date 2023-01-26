@@ -89,6 +89,11 @@ contains
   self%format_ch = format
   self%format_ch = self%format_ch%lower()
   call self%open_xml_file(filename=filename)
+  if(self%error /=0)then
+    error = self%error
+    return
+  endif
+
   call self%write_header_tag
   call self%write_topology_tag(nx1=nx1, nx2=nx2, ny1=ny1, ny2=ny2, nz1=nz1, nz2=nz2, mesh_kind=mesh_kind)
   error = self%error

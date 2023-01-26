@@ -17,6 +17,7 @@ module vtk_fortran_vtk_file
         private
         class(xml_writer_abstract), allocatable, public :: xml_writer
             !! XML writer.
+        character(:), allocatable, private :: error_message
     contains
         procedure, pass(self) :: get_xml_volatile
             !! Return the eventual XML volatile string file.
@@ -26,6 +27,8 @@ module vtk_fortran_vtk_file
             !! Finalize file.
         procedure, pass(self) :: free
             !! Free allocated memory.
+        procedure, pass(self) :: get_error_message
+            !! Return the error message.
     end type vtk_file
 contains
     !| Return the eventual XML volatile string file.
@@ -39,6 +42,20 @@ contains
 
         call self%xml_writer%get_xml_volatile(xml_volatile=xml_volatile, error=error)
     end subroutine get_xml_volatile
+
+    !| Return the error message that the xml writer encountered.
+    pure function get_error_message(self) result(error_message)
+        class(vtk_file), intent(in) :: self
+            !! VTK file.
+        character(len=:), allocatable :: error_message
+            !! error message recorded in xml_writer
+
+        if (allocated(self%error_message)) then
+            error_message = self%error_message
+        else
+            error_message = self%xml_writer%get_error_message()
+        end if
+    end function get_error_message
 
     !| Initialize file (writer).
     function initialize(self, format, filename, mesh_topology, is_volatile, nx1, nx2, ny1, ny2, nz1, nz2) result(error)
@@ -111,6 +128,7 @@ contains
             allocate (xml_writer_binary_local :: self%xml_writer)
         case default
             error = 1
+            self%error_message = "Unsupported file format '"//fformat%chars()//"'"
         end select
         error = self%xml_writer%initialize(format=format, filename=filename, mesh_topology=mesh_topology, &
                                            is_volatile=is_volatile, &

@@ -19,6 +19,7 @@ type, abstract :: xml_writer_abstract
   integer(I4P)  :: xml=0_I4P                       !< XML Logical unit.
   integer(I4P)  :: vtm_block(1:2)=[-1_I4P, -1_I4P] !< Block indexes.
   integer(I4P)  :: error=0_I4P                     !< IO Error status.
+  character(256):: error_message=""                !< IO Error message.
   type(xml_tag) :: tag                             !< XML tags handler.
   logical       :: is_volatile=.false.             !< Flag to check volatile writer.
   type(string)  :: xml_volatile                    !< XML file volatile (not a physical file).
@@ -28,6 +29,7 @@ type, abstract :: xml_writer_abstract
     procedure,                                 pass(self) :: open_xml_file                !< Open xml file.
     procedure,                                 pass(self) :: free                         !< Free allocated memory.
     procedure,                                 pass(self) :: get_xml_volatile             !< Return the XML volatile string file.
+    procedure,                                 pass(self) :: get_error_message            !< Return the error message.
     procedure,                                 pass(self) :: write_connectivity           !< Write connectivity.
     procedure,                                 pass(self) :: write_dataarray_location_tag !< Write dataarray location tag.
     procedure,                                 pass(self) :: write_dataarray_tag          !< Write dataarray tag.
@@ -831,7 +833,9 @@ contains
    !< Close XML file.
    class(xml_writer_abstract), intent(inout) :: self !< Writer.
 
-   if (.not.self%is_volatile) close(unit=self%xml, iostat=self%error)
+   if (.not.self%is_volatile) close(unit=self%xml,          &
+                                    iostat=self%error,      &
+                                    iomsg=self%error_message)
    endsubroutine close_xml_file
 
    subroutine open_xml_file(self, filename)
@@ -846,7 +850,8 @@ contains
            access='STREAM',              &
            action='WRITE',               &
            status='REPLACE',             &
-           iostat=self%error)
+           iostat=self%error,            &
+           iomsg=self%error_message)
    else
       self%xml_volatile = ''
    endif
@@ -863,10 +868,11 @@ contains
    self%ioffset=0_I8P
    self%xml=0_I4P
    self%vtm_block(1:2)=[-1_I4P, -1_I4P]
-   self%error=0_I4P
    call self%tag%free
    self%is_volatile=.false.
    call self%xml_volatile%free
+   self%error=0_I4P
+   self%error_message=""
    endsubroutine free
 
    pure subroutine get_xml_volatile(self, xml_volatile, error)
@@ -878,7 +884,16 @@ contains
    if (self%is_volatile) then
       xml_volatile = self%xml_volatile%raw
    endif
+   if(present(error)) error = self%error
    endsubroutine get_xml_volatile
+
+   pure function get_error_message(self) result(error_message)
+   !< Return the error message.
+   class(xml_writer_abstract), intent(in) :: self          !< Writer.
+   character(len=:)          ,allocatable :: error_message !< Error message. 
+
+   error_message = trim(self%error_message)
+   endfunction get_error_message
 
    ! tag methods
    subroutine write_end_tag(self, name)
@@ -889,7 +904,8 @@ contains
    self%indent = self%indent - 2
    self%tag = xml_tag(name=name, indent=self%indent)
    if (.not.self%is_volatile) then
-      call self%tag%write(unit=self%xml, iostat=self%error, is_indented=.true., end_record=end_rec, only_end=.true.)
+      call self%tag%write(unit=self%xml, iostat=self%error, iomsg=self%error_message,&
+                          is_indented=.true., end_record=end_rec, only_end=.true.)
    else
       self%xml_volatile = self%xml_volatile//self%tag%stringify(is_indented=.true., only_end=.true.)//end_rec
    endif
@@ -923,7 +939,8 @@ contains
    self%tag = xml_tag(name=name, attributes_stream=attributes, sanitize_attributes_value=.true., indent=self%indent, &
                       is_self_closing=.true.)
    if (.not.self%is_volatile) then
-      call self%tag%write(unit=self%xml, iostat=self%error, is_indented=.true., end_record=end_rec)
+      call self%tag%write(unit=self%xml, iostat=self%error, iomsg=self%error_message,&
+                          is_indented=.true., end_record=end_rec)
    else
       self%xml_volatile = self%xml_volatile//self%tag%stringify(is_indented=.true.)//end_rec
    endif
@@ -937,7 +954,8 @@ contains
 
    self%tag = xml_tag(name=name, attributes_stream=attributes, sanitize_attributes_value=.true., indent=self%indent)
    if (.not.self%is_volatile) then
-      call self%tag%write(unit=self%xml, iostat=self%error, is_indented=.true., end_record=end_rec, only_start=.true.)
+      call self%tag%write(unit=self%xml, iostat=self%error, iomsg=self%error_message, &
+                          is_indented=.true., end_record=end_rec, only_start=.true.)
    else
       self%xml_volatile = self%xml_volatile//self%tag%stringify(is_indented=.true., only_start=.true.)//end_rec
    endif
@@ -954,7 +972,8 @@ contains
    self%tag = xml_tag(name=name, attributes_stream=attributes, sanitize_attributes_value=.true., content=content, &
                       indent=self%indent)
    if (.not.self%is_volatile) then
-      call self%tag%write(unit=self%xml, iostat=self%error, is_indented=.true., is_content_indented=.true., end_record=end_rec)
+      call self%tag%write(unit=self%xml, iostat=self%error, iomsg=self%error_message,&
+                          is_indented=.true., is_content_indented=.true., end_record=end_rec)
    else
       self%xml_volatile = self%xml_volatile//self%tag%stringify(is_indented=.true., is_content_indented=.true.)//end_rec
    endif
@@ -980,10 +999,11 @@ contains
                extent(ny1, ny2)//' '//&
                extent(nz1, nz2)//'"'
 
-      if(either_does_not_exist(nx1, nx2).or.&
-         either_does_not_exist(ny1, ny2).or.&
-         either_does_not_exist(nz1, nz2))then
+      if(any([either_does_not_exist(nx1, nx2), &
+              either_does_not_exist(ny1, ny2),&
+              either_does_not_exist(nz1, nz2)]))then
            self%error = 1
+           self%error_message = "missing argument for whole extent"
            return
       end if
    case('PRectilinearGrid', 'PStructuredGrid')
@@ -992,14 +1012,19 @@ contains
                extent(ny1, ny2)//' '//&
                extent(nz1, nz2)//'" GhostLevel="#"'
 
-      if(either_does_not_exist(nx1, nx2).or.&
-         either_does_not_exist(ny1, ny2).or.&
-         either_does_not_exist(nz1, nz2))then
+      if(any([either_does_not_exist(nx1, nx2), &
+              either_does_not_exist(ny1, ny2),&
+              either_does_not_exist(nz1, nz2)]))then
            self%error = 1
+           self%error_message = "missing argument for whole extent"
            return
       end if
    case('PUnstructuredGrid')
       buffer = 'GhostLevel="0"'
+   case default
+      self%error = 1
+      self%error_message = "Unsupported Topology '"//self%topology%chars()//"'"
+      return
    endselect
    call self%write_start_tag(name=self%topology%chars(), attributes=buffer%chars())
    ! parallel topologies peculiars
@@ -1017,6 +1042,7 @@ contains
    case('PStructuredGrid', 'PUnstructuredGrid')
       if (.not.present(mesh_kind)) then
          self%error = 1
+         self%error_message = "Missing the kind of mesh data"
          return
       endif
       call self%write_start_tag(name='PPoints')
@@ -1144,6 +1170,10 @@ contains
       location_ = 'CellData'
    case('NODE')
       location_ = 'PointData'
+   case default
+      self%error = 1
+      self%error_message = "Unsupported location '"//location_%chars()//"'"
+      return
    endselect
    select case(self%topology%chars())
    case('PRectilinearGrid', 'PStructuredGrid', 'PUnstructuredGrid')
@@ -1154,6 +1184,10 @@ contains
       call self%write_start_tag(name=location_%chars())
    case('CLOSE')
       call self%write_end_tag(name=location_%chars())
+   case default
+      self%error = 1
+      self%error_message = "Unsupported action '"//action_%chars()//"'"
+      return
    endselect
    error = self%error
    endfunction write_dataarray_location_tag
@@ -1196,6 +1230,10 @@ contains
       call self%write_start_tag(name='FieldData')
    case('CLOSE')
       call self%write_end_tag(name='FieldData')
+   case default
+      self%error = 1
+      self%error_message = "Unsupported action '"//action_%chars()//"'"
+      return
    endselect
    error = self%error
    endfunction write_fielddata_tag
@@ -1218,7 +1256,8 @@ contains
                                 extent(nz1, nz2)//'"'
 
    if(either_does_not_exist(nz1, nz2))then
-     error = -1
+     self%error = 1
+     self%error_message = "Either nz1 or nz2 does not exist"
      return
    end if
 

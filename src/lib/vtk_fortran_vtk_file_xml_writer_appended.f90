@@ -229,10 +229,12 @@ contains
   endsubroutine ioffset_update
 
   subroutine open_scratch_file(self)
+  use newunit
   !< Open scratch file.
   class(xml_writer_appended), intent(inout) :: self  !< Writer.
 
-  open(newunit=self%scratch,   &
+  self%scratch = get_newunit_number()
+  open(unit=self%scratch,      &
        form='UNFORMATTED',     &
        access='STREAM',        &
        action='READWRITE',     &

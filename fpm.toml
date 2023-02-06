@@ -51,3 +51,4 @@ main = "vtk_fortran_write_vtu.f90"
 [dependencies]
 StringiFor = { git = "https://github.com/degawa/StringiFor", branch = "stringifor-fpm" }
 FoXy = { git = "https://github.com/degawa/FoXy", branch = "foxy-fpm" }
+newunit = { git = "https://github.com/degawa/newunit.git" }

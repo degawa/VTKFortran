@@ -839,12 +839,14 @@ contains
    endsubroutine close_xml_file
 
    subroutine open_xml_file(self, filename)
+   use newunit
    !< Open XML file.
    class(xml_writer_abstract), intent(inout) :: self     !< Writer.
    character(*),               intent(in)    :: filename !< File name.
 
    if (.not.self%is_volatile) then
-      open(newunit=self%xml,             &
+      self%xml = get_newunit_number()
+      open(unit=self%xml,                &
            file=trim(adjustl(filename)), &
            form='UNFORMATTED',           &
            access='STREAM',              &

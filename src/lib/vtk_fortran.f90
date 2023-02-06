@@ -14,6 +14,7 @@ module vtk_fortran
 
 contains
     function write_xml_volatile(xml_volatile, filename) result(error)
+        use newunit
         !! Write the volatile file into a real file.
         !! This is what a master process should do into a parallel scenario where it being the only process allowed to access to
         !! filesystem: slave processes create XML volatile file econded into a characters string and master process collects and writes
@@ -27,7 +28,8 @@ contains
         integer(int32) :: xml_unit
             !! XML file unit.
 
-        open (newunit=xml_unit, &
+        xml_unit = get_newunit_number()
+        open (unit=xml_unit, &
               file=trim(adjustl(filename)), &
               form='UNFORMATTED', &
               access='STREAM', &

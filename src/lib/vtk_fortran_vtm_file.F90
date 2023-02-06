@@ -196,6 +196,7 @@ contains
 
     !| Write one block dataset on scratch files.
     function write_block_scratch(self, scratch, action, filename, name) result(error)
+        use newunit
         class(vtm_file), intent(inout) :: self
             !! VTM file.
         integer(int32), intent(in) :: scratch
@@ -216,7 +217,8 @@ contains
         action_ = trim(adjustl(action)); action_ = action_%upper()
         select case (action_%chars())
         case ('OPEN')
-            open (newunit=self%scratch_unit(scratch), &
+            self%scratch_unit(scratch) = get_newunit_number()
+            open (unit=self%scratch_unit(scratch), &
                   form='FORMATTED', &
                   action='READWRITE', &
                   status='SCRATCH', &

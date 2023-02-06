@@ -1021,6 +1021,8 @@ contains
       end if
    case('PUnstructuredGrid')
       buffer = 'GhostLevel="0"'
+   case ('vtkMultiBlockDataSet', 'UnstructuredGrid')
+      ! these topologies are supported but nothing to do here
    case default
       self%error = 1
       self%error_message = "Unsupported Topology '"//self%topology%chars()//"'"
